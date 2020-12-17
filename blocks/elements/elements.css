@@ -1,0 +1,14 @@
+.elements {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 17px;
+  row-gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 51px;
+}
+
+@media screen and (max-width: 870px) {
+  .elements {
+    justify-content: space-evenly;
+  }
+}

@@ -1,0 +1,18 @@
+.profile__button-add {
+  margin-left: auto;
+  width: 150px;
+  height: 50px;
+  border: 1px solid #FFFFFF;
+  background-color: #000000;
+  background-image: url('../../../images/plus-icon.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+}
+
+@media screen and (max-width: 590px) {
+  .profile__button-add {
+    flex-basis: 100%;
+    margin-top: 36px;
+  }
+}

@@ -1,0 +1,10 @@
+.element__like {
+  width: 21px;
+  height: 18px;
+  margin-top: 6px;
+  background-image: url('../../../images/heart-icon.png');
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0;
+}
