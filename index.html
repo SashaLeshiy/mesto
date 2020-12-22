@@ -9,7 +9,7 @@
 <body class="page">
   <div class="page__container">
     <header class="header section">
-      <img src="images/logo.png" class="header__logo" alt="логотип Mesto Russia">
+      <a href="/" target="_self"><img src="images/logo.png" class="header__logo" alt="логотип Mesto Russia"></a>
     </header>
     <main class="content section">
       <section class="profile">
@@ -17,7 +17,7 @@
          <img src="images/kusto.jpg" class="profile__image" alt="Фотография Жак-Ива Кусто">
         </figure>
         <div class="profile__info">
-          <p class="profile__heading">Жак-Ив Кусто</p>
+          <h1 class="profile__heading">Жак-Ив Кусто</h1>
           <button class="profile__button-edit"></button>
           <p class="profile__subheading">Исследователь океана</p>
         </div>
@@ -27,42 +27,42 @@
         <div class="element">
           <img src="images/karachaevsk.jpg" alt="фотография Карачаевск" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Карачаевск</p>
+            <h2 class="element__heading">Карачаевск</h2>
             <button class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elbrus.jpg" alt="фотография Эльбруса" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Эльбрус</p>
+            <h2 class="element__heading">Эльбрус</h2>
             <button class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/dombay.jpg" alt="фотография Домбая" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Домбай</p>
+            <h2 class="element__heading">Домбай</h2>
             <button class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elbrus.jpg" alt="фотография Эльбруса" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Эльбрус</p>
+            <h2 class="element__heading">Эльбрус</h2>
             <button class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/dombay.jpg" alt="фотография Домбая" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Домбай</p>
+            <h2 class="element__heading">Домбай</h2>
             <button class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/karachaevsk.jpg" alt="фотография Карачаевск" class="element__image">
           <div class="element__text">
-            <p class="element__heading">Карачаево-Черкесcия</p>
+            <h2 class="element__heading">Карачаево-Черкесcия</h2>
             <button class="element__like"></button>
           </div>
         </div>
@@ -76,13 +76,13 @@
       <button class="popup__close"></button>
       <p class="popup__heading">Редактировать профиль</p>
       <form class="input">
-        <input type="text" placeholder="Название" class="input__text">
-        <input type="text" placeholder="Исполнитель" class="input__text">
-        <button class="popup__save">
-          Сохранить
-        </button>
+        <input type="text" value="Жак-Ив Кусто" maxlength="15" class="input__text input__text_name">
+        <input type="text" value="Исследователь океана" maxlength="20" class="input__text input__text_career">
+        <button type="submit" class="popup__save">Сохранить</button>
       </form>
     </div>
   </div>
+</div>
+<script src="scripts/scripts.js"></script>
 </body>
 </html>

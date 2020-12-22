@@ -7,4 +7,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   border: 0;
+  transition: 0.5s linear;
+}
+
+.element__like:hover {
+  transform: scale(1.2);
+  cursor: pointer;
 }

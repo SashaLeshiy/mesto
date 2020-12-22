@@ -18,3 +18,9 @@
     line-height: 17px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .profile__subheading {
+    margin-top: -10px;
+  }
+}
