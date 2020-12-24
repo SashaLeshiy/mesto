@@ -14,8 +14,6 @@ function openPopup() {
 }
 
 function closePopup() {
-  // nameInput.value = name.textContent;
-  // careerInput.value = career.textContent;
   pop.classList.remove('popup_opened');
 }
 
