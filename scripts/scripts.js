@@ -2,8 +2,8 @@ let open = document.querySelector('.profile__button-edit'); //кнопка ре�
 let pop = document.querySelector('.popup'); // переменная всплывающего окна
 let close = document.querySelector('.popup__close'); // закрывающая окно
 let formElement = document.querySelector('.input'); // элементы в всплывающем окне
-let nameInput = document.querySelector('.input_text_name'); // селектор для Имени
-let careerInput = document.querySelector('.input_text_career');// селектор для работы
+let nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
+let careerInput = document.querySelector('.input__text_text_career');// селектор для работы
 let name = document.querySelector('.profile__heading'); // переменнная Имени в профиле
 let career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
 
