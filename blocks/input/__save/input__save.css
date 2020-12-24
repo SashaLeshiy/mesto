@@ -1,4 +1,4 @@
-.popup__save {
+.input__save {
   width: 100%;
   height: 50px;
   background: #000000;
@@ -11,13 +11,13 @@
   transition: opacity 0.7s linear;
 }
 
-.popup__save:hover {
-  opacity: 0.5;
+.input__save:hover {
+  opacity: 0.8;
   cursor: pointer;
 }
 
 @media screen and (max-width: 320px) {
-  .popup__save {
+  .input__save {
     font-size: 14px;
     line-height: 17px;
   }

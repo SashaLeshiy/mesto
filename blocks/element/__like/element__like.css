@@ -2,15 +2,25 @@
   width: 21px;
   height: 18px;
   margin-top: 6px;
-  background-image: url('../../../images/heart-icon.png');
+  background-image: url('../../../images/heart-icon.svg');
   background-color: #ffffff;
   background-repeat: no-repeat;
   background-size: cover;
   border: 0;
   transition: 0.5s linear;
+  outline: none;
 }
 
 .element__like:hover {
-  transform: scale(1.2);
+  opacity: 0.5;
   cursor: pointer;
+}
+
+.element__like:active {
+  background: url('../../../images/black_heart_icon.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+  border: 0;
+  outline: none;
 }

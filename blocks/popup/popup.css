@@ -7,9 +7,10 @@
   display: none;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.popup::before {
+/*.popup::before {
   content: '';
   position: fixed;
   top: 0;
@@ -19,4 +20,4 @@
   opacity: 0.5;
   background-color: #000000;
   z-index: 1;
-}
+}*/
