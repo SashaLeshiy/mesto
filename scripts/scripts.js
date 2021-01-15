@@ -1,6 +1,7 @@
 let open = document.querySelector('.profile__button-edit'); //кнопка редактирование
 let pop = document.querySelector('.popup'); // переменная всплывающего окна
 let close = document.querySelector('.popup__close'); // закрывающая окно
+let namePopup = document.querySelector('.popup__heading'); // название всплывающего окна
 let formElement = document.querySelector('.input'); // элементы в всплывающем окне
 let nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
 let careerInput = document.querySelector('.input__text_text_career');// селектор для работы
@@ -40,7 +41,7 @@ const initialCards = [
 initialCards.forEach(function(item) {
   const elementTemplate = document.querySelector('#element').content;
   const cardElement = elementTemplate.cloneNode(true);
-    cardElement.querySelector('.element__image').src = item['link'];
+    cardElement.querySelector('.element__image').style.backgroundImage = 'url' + "('" + item['link'] + "')";
     cardElement.querySelector('.element__heading').textContent = item['name'];
     cardsSection.append(cardElement);
 });
