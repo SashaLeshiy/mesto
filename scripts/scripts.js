@@ -6,6 +6,7 @@ let nameInput = document.querySelector('.input__text_text_name'); // селек�
 let careerInput = document.querySelector('.input__text_text_career');// селектор для работы
 let name = document.querySelector('.profile__heading'); // переменнная Имени в профиле
 let career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
+let cardsSection = document.querySelector('.elements');// переменная карточки
 
 //массив с дефолтными карточками
 const initialCards = [
@@ -34,6 +35,15 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ]; 
+
+//наполнение дефолтными карточками
+initialCards.forEach(function(item) {
+  const elementTemplate = document.querySelector('#element').content;
+  const cardElement = elementTemplate.cloneNode(true);
+    cardElement.querySelector('.element__image').src = item['link'];
+    cardElement.querySelector('.element__heading').textContent = item['name'];
+    cardsSection.append(cardElement);
+});
 
 function openPopup() {
   nameInput.value = name.textContent;
