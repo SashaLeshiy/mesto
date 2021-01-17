@@ -38,9 +38,9 @@
     <footer class="footer section">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-  <div class="popup">
-    <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+  <div class="popup" id="profile">
+    <div class="popup__container" >
+      <button onclick = "closePopup()" type="button" class="popup__close"></button>
       <h3 class="popup__heading">Редактировать профиль</h3>
       <form name="changeProfile" class="input">
         <input type="text" name="nameSubject" class="input__text input__text_text_name">
@@ -48,10 +48,10 @@
         <button type="submit" class="input__save">Сохранить</button>
       </form>
     </div>
-  </div>
-  <!-- <div class="popupCard">  
-    <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+  </div> 
+  <div class="popup" id="cards">
+    <div class="popup__container" > 
+      <button onclick = "closePopup()" type="button" class="popup__close"></button>
       <h3 class="popup__heading">Новое место</h3>
       <form name="addCard" class="input">
         <input type="text" name="nameElement" class="input__text input__text_text_element">
@@ -59,7 +59,7 @@
         <button type="submit" class="input__save">Создать</button>
       </form>
     </div>
-  </div> -->
+  </div>
 </div>
 <script src="scripts/scripts.js"></script>
 </body>
