@@ -42,7 +42,7 @@
     <div class="popup__container" >
       <button onclick = "closePopup()" type="button" class="popup__close"></button>
       <h3 class="popup__heading">Редактировать профиль</h3>
-      <form name="changeProfile" class="input">
+      <form name="changeProfile" class="input input_profile">
         <input type="text" name="nameSubject" class="input__text input__text_text_name">
         <input type="text" name="careerSubject" class="input__text input__text_text_career">
         <button type="submit" class="input__save">Сохранить</button>
@@ -53,9 +53,9 @@
     <div class="popup__container" > 
       <button onclick = "closePopup()" type="button" class="popup__close"></button>
       <h3 class="popup__heading">Новое место</h3>
-      <form name="addCard" class="input">
-        <input type="text" name="nameElement" class="input__text input__text_text_element">
-        <input type="text" name="linkElement" class="input__text input__text_text_link">
+      <form name="addCard" class="input input_card">
+        <input type="text" name="nameElement" placeholder="Название" class="input__text input__text_text_element">
+        <input type="text" name="linkElement" placeholder="Ссылка на картинку" class="input__text input__text_text_link">
         <button type="submit" class="input__save">Создать</button>
       </form>
     </div>
