@@ -1,0 +1,5 @@
+.element__like_black {
+    background-image: url('../../../images/black_heart_icon.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
