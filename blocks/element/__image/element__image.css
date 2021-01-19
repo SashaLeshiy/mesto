@@ -1,7 +1,7 @@
 .element__image {
-  min-width: 282px;
-  min-height: 282px;
-  background-image: url('../../../images/dombay.jpg');
+  width: 100%;
+  height: 282px;
+  /* background-image: url('../../../images/dombay.jpg');
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
 }
