@@ -26,8 +26,10 @@
       <section class="elements">
       <template id="element">
           <article class="element">
-            <a href="" class="linkImage"><img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" 
-                            alt="" class="element__image"></a>
+            <a href="" >
+              <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" 
+                alt="" class="element__image">
+            </a>
             <button type="button" class="element__trash"></button>
             <div class="element__text">
               <h2 class="element__heading">Карачаевск</h2>
@@ -42,7 +44,7 @@
     </footer>
   <div class="popup" id="profile">
     <div class="popup__container" >
-      <button onclick = "closePopup()" type="button" class="popup__close"></button>
+      <button type="button" class="popup__close"></button>
       <h3 class="popup__heading">Редактировать профиль</h3>
       <form name="changeProfile" class="input input_profile">
         <input type="text" name="nameSubject" class="input__text input__text_text_name">
@@ -53,7 +55,7 @@
   </div> 
   <div class="popup" id="cards">
     <div class="popup__container" > 
-      <button onclick = "closePopup()" type="button" class="popup__close"></button>
+      <button type="button" class="popup__close"></button>
       <h3 class="popup__heading">Новое место</h3>
       <form name="addCard" class="input input_card">
         <input type="text" name="nameElement" placeholder="Название" class="input__text input__text_text_element">
@@ -64,7 +66,7 @@
   </div>
   <div class="popup" id="bigImage">
     <div class="popup__container" >
-      <button onclick = "closePopup()" type="button" class="popup__close"></button>
+      <button type="button" class="popup__close"></button>
     </div>  
   </div>
 </div>
