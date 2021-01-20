@@ -42,14 +42,9 @@ let namePlace = document.querySelector('.input__text_text_element') //селек
 let linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
 let cardsSection = document.querySelector('.elements');// переменная карточки
 
-// function elementsCard () {
-//   const elementCard = elementTemplate.cloneNode(true);
-//   elementCard.querySelector('.element__heading');
-//   elementCard.querySelector('.element__image');
-//   elementCard.querySelector('.element__image');
-// }
 const elementTemplate = document.querySelector('#element').content;
 const newCardElement = elementTemplate.cloneNode(true);
+
 formCard.addEventListener('submit', function(evt){
   evt.preventDefault();
   newCardElement.querySelector('.element__heading').textContent = namePlace.value;
@@ -115,5 +110,16 @@ deleteElement.forEach(function(item) {
   })
 })
 
-
+let imgElement = document.querySelectorAll('.element__image');
+imgElement.forEach(function(item){
+  item.addEventListener('click', function(evt){
+    evt.preventDefault();
+    openImg.classList.add('popup_opened');
+    let bigImage = document.querySelector('.popup__image');
+    bigImage.src = item.src;
+    console.log(item);
+    // let imageName = document.querySelector('popup_imageName');
+    // imageName.textContent = item.alt;
+  });
+})
 
