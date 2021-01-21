@@ -99,19 +99,26 @@ addCard.addEventListener('click', function(){
 
 let elementsList = document.querySelectorAll('.elements');//переменная лайк места
 
-elementsList.forEach(function(item){
-item.addEventListener('click', function(evt){
+function logEvent(evt) {
   evt.preventDefault();
-  evt.target.closest('.element__like').classList.toggle('element__like_black');
-})
-})
+  if(evt.target.className === ('element__image')) {
+    let bigImage = document.querySelector('.popup__image');
+    let imageName = document.querySelector('.popup__imageName');
+    bigImage.src = evt.target.src;
+    imageName.textContent = evt.target.getAttribute('alt');
+    openImg.classList.add('popup_opened')}
+}
 
 elementsList.forEach(function(item){
-  item.addEventListener('click', function(evt){
-    evt.preventDefault();
-    evt.target.closest('.element__trash').closest('.element').remove();
-  })
+item.addEventListener('click', logEvent, true);
 })
+
+// elementsList.forEach(function(item){
+//   item.addEventListener('click', function(evt){
+//     evt.preventDefault();
+//     evt.target.closest('.element').remove();
+//   })
+// })
 // let deleteElement = document.querySelectorAll('.elements');
 // deleteElement.forEach(function(item) {
 //   item.addEventListener('click', function(evt){
@@ -123,14 +130,14 @@ elementsList.forEach(function(item){
 // })
 
 // let imgElement = document.querySelectorAll('.element__image');
-elementsList.forEach(function(item){
-  item.addEventListener('click', function(evt){
-    evt.preventDefault();
-    evt.target.closest('.popup__image').openImg.classList.add('popup_opened');
+// elementsList.forEach(function(item){
+//   item.addEventListener('click', function(evt){
+//     evt.preventDefault();
+//     console.log(evt.target);
     // openImg.classList.add('popup_opened');
     // let bigImage = document.querySelector('.popup__image');
     // let imageName = document.querySelector('.popup__imageName');
     // bigImage.src = item.src;
     // imageName.textContent = item.getAttribute('alt');
-  });
-})
+//   });
+// })
