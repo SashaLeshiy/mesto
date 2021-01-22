@@ -101,12 +101,12 @@ addCard.addEventListener('click', function(){
   popCard.classList.add('popup_opened');
 })
 
-//работае с карточкой
+//работаем с карточкой
 let elementsList = document.querySelectorAll('.elements');
 elementsList.forEach(function(item){
   item.addEventListener('click', eventObj, true);
   })
-//
+
 function eventObj(evt) {
   evt.preventDefault();
   if(evt.target.className === ('element__image')) {//если клик на картинку вслывает поап с окном
