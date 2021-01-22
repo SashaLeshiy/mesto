@@ -10,11 +10,19 @@
   .elements {
     justify-content: space-evenly;
   }
-
+  .elements::after {
+    content: '';
+    flex: auto;
+    display: block;
+    max-width: 282px;
+  }
+}
 
 @media screen and (max-width: 320px) {
   .elements {
     padding-top: 33px;
   }
-}
+  .elements::after {
+    
+  }
 }
