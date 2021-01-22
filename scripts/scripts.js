@@ -117,7 +117,7 @@ function eventObj(evt) {
     openImg.classList.add('popup_opened')}
     else if(evt.target.className === ('element__trash')){//если клик на корзину удаляет карточку
         evt.target.closest('.element').remove();
-      } else if(evt.target.classList.contains('element__like')){//ставит/снимает лайк
+      } else {//ставит/снимает лайк
         evt.target.classList.toggle('element__like_black');
       } 
       }
