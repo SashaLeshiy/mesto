@@ -26,52 +26,58 @@ const initialCards = [
   }
 ]; 
 
-let open = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
-let addCard = document.querySelector('.profile__button-add'); //кнопка добавления карточки
-let pop = document.querySelector('#profile'); // переменная всплывающего окна профиля
-let popCard = document.querySelector('#cards');// переменная всплвающего окна карточек
-let openImg = document.querySelector('#bigImage');// переменная всплвающего окна картинки
-let close = document.querySelectorAll('.popup__close'); // закрывающая окно
-let formElement = document.querySelector('.input_profile'); // элементы в всплывающем окне
-let formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
-let nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
-let careerInput = document.querySelector('.input__text_text_career');// селектор для работы
-let name = document.querySelector('.profile__heading'); // переменнная Имени в профиле
-let career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
-let namePlace = document.querySelector('.input__text_text_element') //селектор название места
-let linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
-let cardsSection = document.querySelector('.elements');// переменная карточки
-
+const open = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
+const addCard = document.querySelector('.profile__button-add'); //кнопка добавления карточки
+const overlay = document.querySelector('.popup__overlay'); // затемнение попап
+const overlayImg = document.querySelector('.popup__overlay_img');// затемнение поап с фотографией
+const pop = document.querySelector('#profile'); // переменная всплывающего окна профиля
+const popCard = document.querySelector('#cards');// переменная всплвающего окна карточек
+const openImg = document.querySelector('#bigImage');// переменная всплвающего окна картинки
+const close = document.querySelectorAll('.popup__close'); // закрывающая окно
+const formElement = document.querySelector('.input_profile'); // элементы в всплывающем окне
+const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
+const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
+const careerInput = document.querySelector('.input__text_text_career');// селектор для работы
+const name = document.querySelector('.profile__heading'); // переменнная Имени в профиле
+const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
+const namePlace = document.querySelector('.input__text_text_element') //селектор название места
+const linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
+const cardsSection = document.querySelector('.elements');// переменная карточки
 const elementTemplate = document.querySelector('#element').content;
 
+// // считаем карточки для изменения стилей для блока карточек
+// function cardslenght() {
+//   if(initialCards.length % 2 !== 0) {
+//     cardsSection.classList.toggle('elements__extraStyle');
+//   }
+// }
 
-//наполнение дефолтными карточками
-initialCards.forEach(function(item) {
-  const cardElement = elementTemplate.cloneNode(true);
-  cardElement.querySelector('.element__image').src = item['link'];
-  cardElement.querySelector('.element__image').alt = item['name'];
-  cardElement.querySelector('.element__heading').textContent = item['name'];
-  cardsSection.append(cardElement);
-});
+function renderCards() {
+  initialCards.forEach(addNewCard);
+}
 
-//заполнение и добавление карточек
-formCard.addEventListener('submit', function(evt){
+function addNewCard(cards){
+const newCardElement = elementTemplate.cloneNode(true);
+newCardElement.querySelector('.element__heading').textContent = cards.name;
+newCardElement.querySelector('.element__image').src = cards.link;
+newCardElement.querySelector('.element__image').setAttribute('alt', cards.name);
+cardsSection.prepend(newCardElement);
+closePopup();
+}
+
+function handleSubmit(evt){
   evt.preventDefault();
-  const newCardElement = elementTemplate.cloneNode(true);
-  newCardElement.querySelector('.element__heading').textContent = namePlace.value;
-  newCardElement.querySelector('.element__image').src = linkPlace.value;
-  newCardElement.querySelector('.element__image').setAttribute('alt', namePlace.value);
-  cardsSection.prepend(newCardElement);
-  initialCards.unshift({'name':namePlace.value, 'link':linkPlace.value});
-  console.log(initialCards);
-  closePopup();
-});
+  let cards = ({'name':namePlace.value, 'link':linkPlace.value});
+  addNewCard(cards);
+}
 
 //закрытие попап окон
 function closePopup() {
   pop.classList.remove('popup_opened');
   popCard.classList.remove('popup_opened');
   openImg.classList.remove('popup_opened');
+  overlay.classList.remove('popup_opened');
+  overlayImg.classList.remove('popup_opened');
 };
 
 close.forEach(function(item){
@@ -93,32 +99,40 @@ open.addEventListener('click', function() {
   nameInput.value = name.textContent;
   careerInput.value = career.textContent;
   pop.classList.add('popup_opened');
+  overlay.classList.add('popup_opened');
 });
+
 //открытие окна добавления карточки
 addCard.addEventListener('click', function(){
   namePlace.value = ('');
   linkPlace.value = ('');
   popCard.classList.add('popup_opened');
+  overlay.classList.add('popup_opened');
 })
 
-//работаем с карточкой
-let elementsList = document.querySelectorAll('.elements');
+//слушаем события на карточках
+const elementsList = document.querySelectorAll('.elements');
 elementsList.forEach(function(item){
   item.addEventListener('click', eventObj, true);
   })
 
+// в зависимости от события лайкаем, удаляем или показываем картинку
 function eventObj(evt) {
   evt.preventDefault();
-  if(evt.target.className === ('element__image')) {//если клик на картинку вслывает поап с окном
-    let bigImage = document.querySelector('.popup__image');
-    let imageName = document.querySelector('.popup__imageName');
+  const bigImage = document.querySelector('.popup__image');
+  const imageName = document.querySelector('.popup__imageName');
+  if(evt.target.className === ('element__image')) {         // Попап с окном
     bigImage.src = evt.target.src;
     imageName.textContent = evt.target.getAttribute('alt');
-    openImg.classList.add('popup_opened')}
-    else if(evt.target.className === ('element__trash')){//если клик на корзину удаляет карточку
+    openImg.classList.add('popup_opened');
+    overlayImg.classList.add('popup_opened');
+  } else if(evt.target.className === ('element__trash')){     //удаление карточки
         evt.target.closest('.element').remove();
-      } else if(evt.target.classList.contains('element__like')) {//ставит/снимает лайк
+      } else if(evt.target.classList.contains('element__like')) {     //лайк
         evt.target.classList.toggle('element__like_black');
       } 
+      return null;
       }
-  
+
+formCard.addEventListener('submit', handleSubmit);
+renderCards();
