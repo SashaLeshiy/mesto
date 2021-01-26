@@ -29,11 +29,12 @@ const initialCards = [
 const open = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addCard = document.querySelector('.profile__button-add'); //кнопка добавления карточки
 const overlay = document.querySelector('.popup__overlay'); // затемнение попап
-const overlayImg = document.querySelector('.popup__overlay_img');// затемнение поап с фотографией
+const overlayImg = document.querySelector('.popupImg__overlay');// затемнение поап с фотографией
 const pop = document.querySelector('#profile'); // переменная всплывающего окна профиля
 const popCard = document.querySelector('#cards');// переменная всплвающего окна карточек
 const openImg = document.querySelector('#bigImage');// переменная всплвающего окна картинки
 const close = document.querySelectorAll('.popup__close'); // закрывающая окно
+const closeImg = document.querySelector('.popupImg__close');
 const formElement = document.querySelector('.input_profile'); // элементы в всплывающем окне
 const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
 const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
@@ -119,8 +120,8 @@ elementsList.forEach(function(item){
 // в зависимости от события лайкаем, удаляем или показываем картинку
 function eventObj(evt) {
   evt.preventDefault();
-  const bigImage = document.querySelector('.popup__image');
-  const imageName = document.querySelector('.popup__imageName');
+  const bigImage = document.querySelector('.popupImg__image');
+  const imageName = document.querySelector('.popupImg__imageName');
   if(evt.target.className === ('element__image')) {         // Попап с окном
     bigImage.src = evt.target.src;
     imageName.textContent = evt.target.getAttribute('alt');
@@ -133,6 +134,7 @@ function eventObj(evt) {
       } 
       return null;
       }
-
+      
+closeImg.addEventListener('click', closePopup);
 formCard.addEventListener('submit', handleSubmit);
 renderCards();
