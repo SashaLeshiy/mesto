@@ -28,8 +28,8 @@ const initialCards = [
 
 const open = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addCard = document.querySelector('.profile__button-add'); //кнопка добавления карточки
-const overlay = document.querySelector('.popup__overlay'); // затемнение попап
-const overlayImg = document.querySelector('.popupImg__overlay');// затемнение поап с фотографией
+const overlay = document.querySelector('.overlay'); // затемнение попап
+const overlayImg = document.querySelector('.overlayImg');// затемнение поап с фотографией
 const pop = document.querySelector('#profile'); // переменная всплывающего окна профиля
 const popCard = document.querySelector('#cards');// переменная всплвающего окна карточек
 const openImg = document.querySelector('#bigImage');// переменная всплвающего окна картинки
@@ -134,7 +134,7 @@ function eventObj(evt) {
       } 
       return null;
       }
-      
+
 closeImg.addEventListener('click', closePopup);
 formCard.addEventListener('submit', handleSubmit);
 renderCards();
