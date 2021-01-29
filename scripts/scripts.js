@@ -75,12 +75,33 @@ function handleSubmit(evt){
 }
 
 //закрытие попап окон
-function closePopup(event) {
-  event.target.closest('.popup').classList.remove('popup_opened');
+function closePopup(evt) {
+  evt.target.closest('.popup').classList.remove('popup_opened');
 }
 
+
 closeButton.forEach(function(item){
-  item.addEventListener('click', closePopup)});
+  item.addEventListener('click', closePopup);
+});
+
+const overlayClose = document.querySelectorAll('.popup');
+overlayClose.forEach((item) => {
+    item.addEventListener('click', closeClick);
+    document.addEventListener('keydown', closeEsc);
+})
+
+function closeClick(evt) {
+  if(evt.target.classList.contains('popup')) {
+    closePopup(evt);
+  }
+}
+
+function closeEsc(evt) {
+  if(evt.key === 'Escape') {
+    pop.classList.remove('popup_opened');
+    popCard.classList.remove('popup_opened');
+  }
+}
 
 //редактирование профиля
 formElement.addEventListener('submit', function(evt){
@@ -91,11 +112,12 @@ formElement.addEventListener('submit', function(evt){
 });
 
 //открытие окна редактирование профиля
-editButton.addEventListener('click', function() {
+editButton.addEventListener('click', function(evt) {
   nameInput.value = name.textContent;
   careerInput.value = career.textContent;
   pop.classList.add('popup_opened');
 });
+
 
 //открытие окна добавления карточки
 addButton.addEventListener('click', function(){
