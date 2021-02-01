@@ -32,7 +32,6 @@ const pop = document.querySelector('#profile'); // переменная вспл
 const popCard = document.querySelector('#cards');// переменная всплвающего окна карточек
 const openImg = document.querySelector('#bigImage');// переменная всплвающего окна картинки
 const closeButton = document.querySelectorAll('.popup__close'); // закрывающая окно
-const closeImg = document.querySelector('.popupImg__close'); // закрытие попапа с картинкой
 const formElement = document.querySelector('.input_profile'); // элементы в всплывающем окне
 const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
 const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
@@ -87,19 +86,16 @@ closeButton.forEach(function(item){
 const overlayClose = document.querySelectorAll('.popup');
 overlayClose.forEach((item) => {
     item.addEventListener('click', closeClick);
-    document.addEventListener('keydown', closeEsc);
+    document.addEventListener('keydown', function(evt) {
+      if(evt.key === 'Escape') {
+        item.classList.remove('popup_opened');
+      }
+    });
 })
 
 function closeClick(evt) {
   if(evt.target.classList.contains('popup')) {
     closePopup(evt);
-  }
-}
-
-function closeEsc(evt) {
-  if(evt.key === 'Escape') {
-    pop.classList.remove('popup_opened');
-    popCard.classList.remove('popup_opened');
   }
 }
 
@@ -111,11 +107,16 @@ formElement.addEventListener('submit', function(evt){
   pop.classList.remove('popup_opened');
 });
 
+function openPopup(elem) {
+  elem.classList.add('popup_opened');
+}
+
+
 //открытие окна редактирование профиля
-editButton.addEventListener('click', function(evt) {
+editButton.addEventListener('click', function() {
   nameInput.value = name.textContent;
   careerInput.value = career.textContent;
-  pop.classList.add('popup_opened');
+  openPopup(pop);
 });
 
 
@@ -123,12 +124,8 @@ editButton.addEventListener('click', function(evt) {
 addButton.addEventListener('click', function(){
   namePlace.value = '';
   linkPlace.value = '';
-  popCard.classList.add('popup_opened');
+  openPopup(popCard);
 })
-
-closeImg.addEventListener('click', function(){
-  openImg.classList.remove('popup_opened');
-});
 
 function setListener(elem) {
   elem.querySelector('.element__trash').addEventListener('click', deleteElem);
@@ -145,11 +142,12 @@ function likeElem(evt){
 }
 
 function showImg(evt){
-  const bigImage = document.querySelector('.popupImg__image');
-  const imageName = document.querySelector('.popupImg__imageName');
+  evt.preventDefault();
+  const bigImage = document.querySelector('.popup__image');
+  const imageName = document.querySelector('.popup__imageName');
   bigImage.src = evt.target.src;
   imageName.textContent = evt.target.getAttribute('alt');
-  openImg.classList.add('popup_opened');
+  openPopup(openImg);
 }
 
 formCard.addEventListener('submit', handleSubmit);

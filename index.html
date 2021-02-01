@@ -47,9 +47,11 @@
     <div class="popup__container" >
       <button type="button" class="popup__close"></button>
       <h3 class="popup__heading">Редактировать профиль</h3>
-      <form name="changeProfile" class="input input_profile">
-        <input type="text" name="nameSubject" class="input__text input__text_text_name">
-        <input type="text" name="careerSubject" class="input__text input__text_text_career">
+      <form name="changeProfile" class="input input_profile" id="profileForm" novalidate>
+        <input type="text" name="nameSubject" id="nameSubject" class="input__text input__text_text_name" minlength="2" maxlength="40" required>
+        <span class="input__text-error nameSubject-error" ></span>
+        <input type="text" name="careerSubject" id="careerSubject" class="input__text input__text_text_career" minlength="2" maxlength="200" required>
+        <span class="input__text-error careerSubject-error" ></span>
         <button type="submit" class="input__save">Сохранить</button>
       </form>
     </div>
@@ -58,22 +60,25 @@
     <div class="popup__container" > 
       <button type="button" class="popup__close"></button>
       <h3 class="popup__heading">Новое место</h3>
-      <form name="addCard" class="input input_card">
-        <input type="text" name="nameElement" placeholder="Название" class="input__text input__text_text_element">
-        <input type="text" name="linkElement" placeholder="Ссылка на картинку" class="input__text input__text_text_link">
+      <form name="addCard" class="input input_card" id="addForm" novalidate>
+        <input type="text" name="nameElement" id="nameElement" placeholder="Название" min class="input__text input__text_text_element" minlength="2" maxlength="30" required>
+        <span class="input__text-error nameElement-error" ></span>
+        <input type="url" name="linkElement" id="linkElement" placeholder="Ссылка на картинку" class="input__text input__text_text_link" required>
+        <span class="input__text-error linkElement-error" ></span>
         <button type="submit" class="input__save">Создать</button>
       </form>
     </div>
   </div>
-  <div class="popupImg" id="bigImage">
-    <div class="popupImg__imageContainer">
+  <div class="popup popupImg" id="bigImage">
+    <div class="popup__imageContainer">
       <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-        alt="Архыз" class="popupImg__image">
-        <button type="button" class="popupImg__close"></button>
-      <p class="popupImg__imageName"></p>
+        alt="Архыз" class="popup__image">
+        <button type="button" class="popup__close"></button>
+      <p class="popup__imageName"></p>
     </div> 
   </div>
 </div>
 <script src="scripts/scripts.js"></script>
+<script src="scripts/validate.js"></script>
 </body>
 </html>
