@@ -17,6 +17,7 @@ const showError = (input, errorMessage) => {
     formError.textContent = errorMessage;
 }
 
+
 const hideError = (input) => {
     const formError = document.querySelector(`.${input.id}-error`);
     formError.classList.remove('input__text-error_active');
