@@ -1,45 +1,69 @@
-const profileForm = document.querySelector('.input_profile');
-const addForm = document.querySelector('.input_card');
-const formInput = document.querySelectorAll('.input__text');
-
-const setListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll('.input__text'));
-    inputList.forEach((inputElem) => {
-        inputElem.addEventListener('input', function (){
-            checkInputValidity(inputElem);
-        })
-    });
-}
-
-const showError = (input, errorMessage) => {
-    const formError = document.querySelector(`.${input.id}-error`);
+// выводим ошибку если не валидно
+const showError = (formElement, input, errorMessage) => {
+    const formError = formElement.querySelector(`.${input.id}-error`);
     formError.classList.add('input__text-error_active');
     formError.textContent = errorMessage;
 }
 
-
-const hideError = (input) => {
-    const formError = document.querySelector(`.${input.id}-error`);
+// скрываем ошибку если валидно
+const hideError = (formElement, input) => {
+    const formError = formElement.querySelector(`.${input.id}-error`);
     formError.classList.remove('input__text-error_active');
     formError.textContent = "";
 }
 
-const checkInputValidity = (inputItem) => {
+// проверяем поле на валидность
+const checkInputValidity = (formElement, inputItem) => {
     if(!inputItem.validity.valid){
-        showError(inputItem, inputItem.validationMessage);
+        showError(formElement, inputItem, inputItem.validationMessage);
     } else {
-        hideError(inputItem);
+        hideError(formElement, inputItem);
     }
 }
 
+//слушаем поля ввода
+const setListeners = (formElement) => {
+    const buttonElement = Array.from(formElement.querySelectorAll('.input__save'));
+    const inputList = Array.from(formElement.querySelectorAll('.input__text'));
+    inputList.forEach((inputElem) => {
+        inputElem.addEventListener('input', function (){
+            checkInputValidity(formElement, inputElem);
+            toggleButtonState(inputList, buttonElement[0]);
+        })
+    });
+    
+}
+
+// проверяем все поля на валидность
+const hasInvalidInput = (inputList) => {
+    return inputList.some((inputElement) => {
+        return !inputElement.validity.valid;
+    })
+}
+
+//работаем с кнопкой в зависимости от валидности полей
+const toggleButtonState = (inputList, buttonElement) => {
+    if(hasInvalidInput(inputList)) {
+        buttonElement.classList.remove('input__save_active');
+        buttonElement.setAttribute('disabled', true);
+    } else {
+        buttonElement.classList.add('input__save_active');
+        buttonElement.removeAttribute('disabled');
+    }
+  }
+
+//выбираем из форм поля ввода
 const enableValidation = () => {
     let formList = Array.from(document.querySelectorAll('form'));
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
-        setListeners(formElement);    
+        setListeners(formElement); 
 })
 }
 
 enableValidation();
+
+
+

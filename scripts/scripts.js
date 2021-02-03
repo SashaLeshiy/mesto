@@ -36,12 +36,15 @@ const formElement = document.querySelector('.input_profile'); // элемент�
 const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
 const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
 const careerInput = document.querySelector('.input__text_text_career');// селектор для работы
+const errorText = document.querySelectorAll('.input__text-error');
 const name = document.querySelector('.profile__heading'); // переменнная Имени в профиле
 const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
 const namePlace = document.querySelector('.input__text_text_element') //селектор название места
 const linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
 const cardsSection = document.querySelector('.elements');// переменная карточки
 const elementTemplate = document.querySelector('#element').content;
+
+
 
 // // считаем карточки для изменения стилей для блока карточек
 // function cardslenght() {
@@ -116,14 +119,22 @@ function openPopup(elem) {
 editButton.addEventListener('click', function() {
   nameInput.value = name.textContent;
   careerInput.value = career.textContent;
+  errorClean();
   openPopup(pop);
 });
 
+//очистка полей ошибки при открытии окон
+const errorClean = () => {
+  errorText.forEach((elem) =>{
+    elem.classList.remove('input__text-error_active');
+  })
+}
 
 //открытие окна добавления карточки
 addButton.addEventListener('click', function(){
   namePlace.value = '';
   linkPlace.value = '';
+  errorClean();
   openPopup(popCard);
 })
 
