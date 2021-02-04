@@ -75,6 +75,7 @@ renderCards();
 function handleSubmit(evt){
   evt.preventDefault();
   const card = ({'name':namePlace.value, 'link':linkPlace.value});
+  disableButton(evt.target);
   addElem(card);
   closePopup(popupCard);
 }
@@ -83,9 +84,13 @@ function handleSubmit(evt){
 function closePopup(elem) {
   elem.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleCloseByEsc);
-  const disableButton = elem.querySelector('.input__save');
-  disableButton.classList.remove('input__save_active');
-  disableButton.setAttribute('disabled', true);
+}
+
+//выключение submit при следующем открытии после submit
+function disableButton(elem) {
+  const elemButton = elem.querySelector('.input__save');
+  elemButton.classList.remove('input__save_active');
+  elemButton.setAttribute('disabled', true);
 }
 
 // закрытие по клику на крестик
@@ -115,8 +120,10 @@ function handleCloseByEsc (evt) {
 //редактирование профиля
 formElement.addEventListener('submit', function(evt){
   evt.preventDefault();
+  console.log(evt.target);
   profileName.textContent = nameInput.value;
   career.textContent = careerInput.value;
+  disableButton(evt.target);
   closePopup(popupProfile);
 });
 
