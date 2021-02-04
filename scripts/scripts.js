@@ -36,7 +36,6 @@ const formElement = document.querySelector('.input_profile'); // элемент�
 const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
 const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
 const careerInput = document.querySelector('.input__text_text_career');// селектор для работы
-
 const profileName = document.querySelector('.profile__heading'); // переменнная Имени в профиле
 const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
 const namePlace = document.querySelector('.input__text_text_element') //селектор название места
@@ -50,9 +49,10 @@ const popupList = document.querySelectorAll('.popup');// все попапы
 //создание новой карточки
 function addNewCard(card){
   const newCardElement = elementTemplate.cloneNode(true);
+  const imageNewCardElement = newCardElement.querySelector('.element__image');
   newCardElement.querySelector('.element__heading').textContent = card.name;
-  newCardElement.querySelector('.element__image').src = card.link;
-  newCardElement.querySelector('.element__image').setAttribute('alt', card.name);
+  imageNewCardElement.src = card.link;
+  imageNewCardElement.setAttribute('alt', card.name);
   setListener(newCardElement);
   return newCardElement;
 }
@@ -83,6 +83,9 @@ function handleSubmit(evt){
 function closePopup(elem) {
   elem.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleCloseByEsc);
+  const disableButton = elem.querySelector('.input__save');
+  disableButton.classList.remove('input__save_active');
+  disableButton.setAttribute('disabled', true);
 }
 
 // закрытие по клику на крестик
