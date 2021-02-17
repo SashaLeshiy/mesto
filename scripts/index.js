@@ -24,7 +24,9 @@ const initialCards = [
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; 
+];
+
+import Card from '../scripts/Card.js';
 
 const editButton = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addButton = document.querySelector('.profile__button-add'); //кнопка добавления карточки
@@ -46,39 +48,48 @@ const bigImage = document.querySelector('.popup__image');// окно с карт
 const imageName = document.querySelector('.popup__imageName'); // подпись к картинке
 const popupList = document.querySelectorAll('.popup');// все попапы
 
-//создание новой карточки
-function addNewCard(card){
-  const newCardElement = elementTemplate.cloneNode(true);
-  const imageNewCardElement = newCardElement.querySelector('.element__image');
-  newCardElement.querySelector('.element__heading').textContent = card.name;
-  imageNewCardElement.src = card.link;
-  imageNewCardElement.setAttribute('alt', card.name);
-  setListener(newCardElement);
-  return newCardElement;
-}
-
 // Добавление новой карточки
 const addElem = (elem) => {
-  cardsSection.prepend(addNewCard(elem));
+  const cards = new Card(elem, '#element');
+  const cardElement = cards.generateCard();
+  document.querySelector('.elements').prepend(cardElement);
 }
 
-// Построение карточек из массива
-function renderCards() {
-  initialCards.forEach((item) => {
-    addElem(item);
-  });
-}
+//добавление карточек из массива 
+initialCards.forEach((item) => {
+  addElem(item);
+})
 
-renderCards();
-
-//добваление элемента новой карточки
+//добаление элементов новой карточки
 function handleSubmit(evt){
   evt.preventDefault();
-  const card = ({'name':namePlace.value, 'link':linkPlace.value});
+  const data = ({'name':namePlace.value, 'link':linkPlace.value});
+  addElem(data);
   disableButton(evt.target);
-  addElem(card);
   closePopup(popupCard);
 }
+
+//создание новой карточки
+// function addNewCard(card){
+//   const newCardElement = elementTemplate.cloneNode(true);
+//   const imageNewCardElement = newCardElement.querySelector('.element__image');
+//   newCardElement.querySelector('.element__heading').textContent = card.name;
+//   imageNewCardElement.src = card.link;
+//   imageNewCardElement.setAttribute('alt', card.name);
+//   setListener(newCardElement);
+//   return newCardElement;
+// }
+
+
+
+// // Построение карточек из массива
+// function renderCards() {
+//   initialCards.forEach((item) => {
+//     addElem(item);
+//   });
+// }
+
+// renderCards();
 
 //закрытие попап окон
 function closePopup(elem) {
@@ -120,7 +131,6 @@ function handleCloseByEsc (evt) {
 //редактирование профиля
 formElement.addEventListener('submit', function(evt){
   evt.preventDefault();
-  console.log(evt.target);
   profileName.textContent = nameInput.value;
   career.textContent = careerInput.value;
   disableButton(evt.target);
@@ -158,25 +168,25 @@ addButton.addEventListener('click', function(evt){
   openPopup(popupCard);
 })
 
-function setListener(elem) {
-  elem.querySelector('.element__trash').addEventListener('click', deleteElem);
-  elem.querySelector('.element__like').addEventListener('click', likeElem);
-  elem.querySelector('.element__image').addEventListener('click', showImg);
-}
+// function setListener(elem) {
+//   elem.querySelector('.element__trash').addEventListener('click', deleteElem);
+//   elem.querySelector('.element__like').addEventListener('click', likeElem);
+//   elem.querySelector('.element__image').addEventListener('click', showImg);
+// }
 
-function deleteElem(evt){
-  evt.target.closest('.element').remove();
-}
+// function deleteElem(evt){
+//   evt.target.closest('.element').remove();
+// }
 
-function likeElem(evt){
-  evt.target.classList.toggle('element__like_black');
-}
+// function likeElem(evt){
+//   evt.target.classList.toggle('element__like_black');
+// }
 
-function showImg(evt){
-  evt.preventDefault();
-  bigImage.src = evt.target.src;
-  imageName.textContent = evt.target.getAttribute('alt');
-  openPopup(openImg);
-}
+// function showImg(evt){
+//   evt.preventDefault();
+//   bigImage.src = evt.target.src;
+//   imageName.textContent = evt.target.getAttribute('alt');
+//   openPopup(openImg);
+// }
 
 formCard.addEventListener('submit', handleSubmit);
