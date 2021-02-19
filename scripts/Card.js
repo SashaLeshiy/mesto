@@ -31,10 +31,9 @@ export default class Card {
         this._element.querySelector('.element__like').addEventListener('click', (evt) => {
             this._likeElem(evt);
         });
-        // this._element.querySelector('.element__image').addEventListener('click', (evt) => {
-        //     this._showImg(evt);
-        // });
-
+        this._element.querySelector('.element__image').addEventListener('click', () => {
+            showImg();
+        });
     }
 
     _deleteElem(evt) {

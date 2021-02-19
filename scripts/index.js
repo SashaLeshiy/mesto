@@ -27,6 +27,7 @@ const initialCards = [
 ];
 
 import Card from '../scripts/Card.js';
+import FormValidator from '../scripts/FormValidator.js';
 
 const editButton = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addButton = document.querySelector('.profile__button-add'); //кнопка добавления карточки
@@ -48,6 +49,23 @@ const bigImage = document.querySelector('.popup__image');// окно с карт
 const imageName = document.querySelector('.popup__imageName'); // подпись к картинке
 const popupList = document.querySelectorAll('.popup');// все попапы
 
+// валидация форм
+  let formList = Array.from(document.querySelectorAll('form'));
+  formList.forEach((form) => {
+  const validForm = new FormValidator ({
+        // formSelector: form.querySelector('.input'),
+        inputSelector: form.querySelector('.input__text'),
+        submitButtonSelector: form.querySelector('.input__save'),
+        // activeButtonClass: 'input__save_active',
+        inputErrorClass: form.querySelector('.input__text-error'),
+        // errorClass: 'input__text-error_active'
+  }, form);
+  validForm.enableValidation();
+    });
+    
+
+
+
 // Добавление новой карточки
 const addElem = (elem) => {
   const cards = new Card(elem, '#element');
@@ -67,6 +85,13 @@ function handleSubmit(evt){
   addElem(data);
   disableButton(evt.target);
   closePopup(popupCard);
+}
+
+const showImg = (evt) =>{
+  evt.preventDefault();
+  bigImage.src = evt.target.src;
+  imageName.textContent = evt.target.getAttribute('alt');
+  openPopup(openImg);
 }
 
 //создание новой карточки
@@ -180,13 +205,6 @@ addButton.addEventListener('click', function(evt){
 
 // function likeElem(evt){
 //   evt.target.classList.toggle('element__like_black');
-// }
-
-// function showImg(evt){
-//   evt.preventDefault();
-//   bigImage.src = evt.target.src;
-//   imageName.textContent = evt.target.getAttribute('alt');
-//   openPopup(openImg);
 // }
 
 formCard.addEventListener('submit', handleSubmit);
