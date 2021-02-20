@@ -1,8 +1,9 @@
 export default class Card {
-    constructor(data, cardSelector){
+    constructor(data, cardSelector, func){
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
+        this._showImg = func;
     }
 
     _getTemplate() {
@@ -31,8 +32,8 @@ export default class Card {
         this._element.querySelector('.element__like').addEventListener('click', (evt) => {
             this._likeElem(evt);
         });
-        this._element.querySelector('.element__image').addEventListener('click', () => {
-            showImg();
+        this._element.querySelector('.element__image').addEventListener('click', (evt) => {
+            this._showImg(evt);
         });
     }
 
@@ -44,18 +45,4 @@ export default class Card {
         evt.target.classList.toggle('element__like_black');
     }
 
-    // _showImg(evt) {
-    //     const bigImage = document.querySelector('.popup__image');
-    //     const imageName = document.querySelector('.popup__imageName'); 
-    //     bigImage.src = evt.target.src;
-    //     imageName.textContent = evt.target.getAttribute('alt');
-    //     document.querySelector('#bigImage').classList.add('popup_opened');
-    //     this._setEventListener();
-    // }
-
-    // _closeImageByEsc(evt) {
-    //     if(evt.key === 'Escape') {
-    //         document.querySelector('.popup_opened').classList.remove('popup_opened');
-    //     }
-    // }
 }

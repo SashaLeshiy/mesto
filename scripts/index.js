@@ -54,21 +54,18 @@ const popupList = document.querySelectorAll('.popup');// все попапы
   formList.forEach((form) => {
   const validForm = new FormValidator ({
         // formSelector: form.querySelector('.input'),
-        inputSelector: form.querySelector('.input__text'),
+        inputSelector: Array.from(form.querySelectorAll('.input__text')),
         submitButtonSelector: form.querySelector('.input__save'),
         // activeButtonClass: 'input__save_active',
-        inputErrorClass: form.querySelector('.input__text-error'),
+        inputErrorClass: Array.from(form.querySelectorAll('.input__text-error')),
         // errorClass: 'input__text-error_active'
   }, form);
   validForm.enableValidation();
     });
-    
-
-
 
 // Добавление новой карточки
 const addElem = (elem) => {
-  const cards = new Card(elem, '#element');
+  const cards = new Card(elem, '#element', showImg);
   const cardElement = cards.generateCard();
   document.querySelector('.elements').prepend(cardElement);
 }
@@ -87,34 +84,12 @@ function handleSubmit(evt){
   closePopup(popupCard);
 }
 
-const showImg = (evt) =>{
+function showImg(evt){
   evt.preventDefault();
   bigImage.src = evt.target.src;
   imageName.textContent = evt.target.getAttribute('alt');
   openPopup(openImg);
 }
-
-//создание новой карточки
-// function addNewCard(card){
-//   const newCardElement = elementTemplate.cloneNode(true);
-//   const imageNewCardElement = newCardElement.querySelector('.element__image');
-//   newCardElement.querySelector('.element__heading').textContent = card.name;
-//   imageNewCardElement.src = card.link;
-//   imageNewCardElement.setAttribute('alt', card.name);
-//   setListener(newCardElement);
-//   return newCardElement;
-// }
-
-
-
-// // Построение карточек из массива
-// function renderCards() {
-//   initialCards.forEach((item) => {
-//     addElem(item);
-//   });
-// }
-
-// renderCards();
 
 //закрытие попап окон
 function closePopup(elem) {
@@ -192,19 +167,5 @@ addButton.addEventListener('click', function(evt){
   errorClean(errorList);
   openPopup(popupCard);
 })
-
-// function setListener(elem) {
-//   elem.querySelector('.element__trash').addEventListener('click', deleteElem);
-//   elem.querySelector('.element__like').addEventListener('click', likeElem);
-//   elem.querySelector('.element__image').addEventListener('click', showImg);
-// }
-
-// function deleteElem(evt){
-//   evt.target.closest('.element').remove();
-// }
-
-// function likeElem(evt){
-//   evt.target.classList.toggle('element__like_black');
-// }
 
 formCard.addEventListener('submit', handleSubmit);
