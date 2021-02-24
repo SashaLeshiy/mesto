@@ -56,9 +56,9 @@ const popupList = document.querySelectorAll('.popup');// все попапы
         // formSelector: form.querySelector('.input'),
         inputSelector: Array.from(form.querySelectorAll('.input__text')),
         submitButtonSelector: form.querySelector('.input__save'),
-        // activeButtonClass: 'input__save_active',
+        activeButtonClass: 'input__save_active',
         inputErrorClass: Array.from(form.querySelectorAll('.input__text-error')),
-        // errorClass: 'input__text-error_active'
+        errorClass: 'input__text-error_active'
   }, form);
   validForm.enableValidation();
     });

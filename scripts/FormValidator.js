@@ -3,6 +3,8 @@ export default class FormValidator {
           this._inputs = formData.inputSelector;
           this._buttons = formData.submitButtonSelector;
           this._error = formData.inputErrorClass;
+          this._activeButtonClass = formData.activeButtonClass;
+          this._errorClass = formData.errorClass;
           this._form = form;
       } 
       
@@ -26,13 +28,13 @@ export default class FormValidator {
 
     _showError(input, currentForm, errorMessage) {
         const formError = currentForm.querySelector(`.${input.id}-error`);
-        formError.classList.add('input__text-error_active');
+        formError.classList.add(this._errorClass);
         formError.textContent = errorMessage;
     }
 
     _hideError(input, currentForm) {
         const formError = currentForm.querySelector(`.${input.id}-error`);
-        formError.classList.remove('input__text-error_active');
+        formError.classList.remove(this._errorClass);
         formError.textContent = '';
     }
 
@@ -44,10 +46,10 @@ export default class FormValidator {
 
     _toggleButtonState = (inputList, buttonElement) => {
         if(this._hasInvalidInput(inputList)) {
-            buttonElement.classList.remove('input__save_active');
+            buttonElement.classList.remove(this._activeButtonClass);
             buttonElement.setAttribute('disabled', true);
         } else {
-            buttonElement.classList.add('input__save_active');
+            buttonElement.classList.add(this._activeButtonClass);
             buttonElement.removeAttribute('disabled');
         }
         }
