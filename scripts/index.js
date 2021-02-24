@@ -1,3 +1,6 @@
+import Card from '../scripts/Card.js';
+import FormValidator from '../scripts/FormValidator.js';
+
 //массив с дефолтными карточками
 const initialCards = [
   {
@@ -26,9 +29,6 @@ const initialCards = [
   }
 ];
 
-import Card from '../scripts/Card.js';
-import FormValidator from '../scripts/FormValidator.js';
-
 const editButton = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addButton = document.querySelector('.profile__button-add'); //кнопка добавления карточки
 const popupProfile = document.querySelector('#profile'); // переменная всплывающего окна профиля
@@ -43,8 +43,6 @@ const profileName = document.querySelector('.profile__heading'); // переме
 const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
 const namePlace = document.querySelector('.input__text_text_element') //селектор название места
 const linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
-const cardsSection = document.querySelector('.elements');// переменная карточки
-const elementTemplate = document.querySelector('#element').content;
 const bigImage = document.querySelector('.popup__image');// окно с картинкой
 const imageName = document.querySelector('.popup__imageName'); // подпись к картинке
 const popupList = document.querySelectorAll('.popup');// все попапы
@@ -53,11 +51,10 @@ const popupList = document.querySelectorAll('.popup');// все попапы
   let formList = Array.from(document.querySelectorAll('form'));
   formList.forEach((form) => {
   const validForm = new FormValidator ({
-        // formSelector: form.querySelector('.input'),
         inputSelector: Array.from(form.querySelectorAll('.input__text')),
         submitButtonSelector: form.querySelector('.input__save'),
         activeButtonClass: 'input__save_active',
-        inputErrorClass: Array.from(form.querySelectorAll('.input__text-error')),
+        inputErrorClass: Array.from(form.querySelectorAll(`.input__text-error`)),
         errorClass: 'input__text-error_active'
   }, form);
   validForm.enableValidation();
