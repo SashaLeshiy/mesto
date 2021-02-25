@@ -29,6 +29,7 @@ const initialCards = [
   }
 ];
 
+const cardElements = document.querySelector('.elements'); // блок с карточками
 const editButton = document.querySelector('.profile__button-edit'); //кнопка редактирование профиля
 const addButton = document.querySelector('.profile__button-add'); //кнопка добавления карточки
 const popupProfile = document.querySelector('#profile'); // переменная всплывающего окна профиля
@@ -48,23 +49,28 @@ const imageName = document.querySelector('.popup__imageName'); // подпись
 const popupList = document.querySelectorAll('.popup');// все попапы
 
 // валидация форм
-  let formList = Array.from(document.querySelectorAll('form'));
-  formList.forEach((form) => {
-  const validForm = new FormValidator ({
-        inputSelector: Array.from(form.querySelectorAll('.input__text')),
-        submitButtonSelector: form.querySelector('.input__save'),
+  const formList = Array.from(document.querySelectorAll('form'));
+
+  const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
-        inputErrorClass: Array.from(form.querySelectorAll(`.input__text-error`)),
+        inputErrors: Array.from(formList[0].querySelectorAll(`.input__text-error`)),
         errorClass: 'input__text-error_active'
-  }, form);
-  validForm.enableValidation();
-    });
+  }, formList[0]);
+  validProfileForm.enableValidation();
+
+  const validAddForm = new FormValidator ({
+      activeButtonClass: 'input__save_active',
+      inputErrorClass: Array.from(formList[1].querySelectorAll(`.input__text-error`)),
+      errorClass: 'input__text-error_active'
+  }, formList[1]);
+  validAddForm.enableValidation();
+
 
 // Добавление новой карточки
 const addElem = (elem) => {
   const cards = new Card(elem, '#element', showImg);
   const cardElement = cards.generateCard();
-  document.querySelector('.elements').prepend(cardElement);
+  cardElements.prepend(cardElement);
 }
 
 //добавление карточек из массива 
@@ -77,7 +83,6 @@ function handleSubmit(evt){
   evt.preventDefault();
   const data = ({'name':namePlace.value, 'link':linkPlace.value});
   addElem(data);
-  disableButton(evt.target);
   closePopup(popupCard);
 }
 
@@ -92,13 +97,6 @@ function showImg(evt){
 function closePopup(elem) {
   elem.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleCloseByEsc);
-}
-
-//выключение submit при следующем открытии после submit
-function disableButton(elem) {
-  const elemButton = elem.querySelector('.input__save');
-  elemButton.classList.remove('input__save_active');
-  elemButton.setAttribute('disabled', true);
 }
 
 // закрытие по клику на крестик
@@ -130,7 +128,6 @@ formElement.addEventListener('submit', function(evt){
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   career.textContent = careerInput.value;
-  disableButton(evt.target);
   closePopup(popupProfile);
 });
 
@@ -139,29 +136,19 @@ function openPopup(elem) {
   document.addEventListener('keydown', handleCloseByEsc);
 }
 
-
 //открытие окна редактирование профиля
 editButton.addEventListener('click', function() {
   nameInput.value = profileName.textContent;
   careerInput.value = career.textContent;
-  const errorList = popupProfile.querySelectorAll('.input__text-error');
-  errorClean(errorList);
+  validProfileForm.resetValidation();
   openPopup(popupProfile);
 });
-
-//очистка полей ошибки при открытии окон
-const errorClean = (errors) => {
-    errors.forEach((item) => {
-    item.classList.remove('input__text-error_active');
-  });
-}
 
 //открытие окна добавления карточки
 addButton.addEventListener('click', function(evt){
   namePlace.value = '';
   linkPlace.value = '';
-  const errorList = popupCard.querySelectorAll('.input__text-error');
-  errorClean(errorList);
+  validAddForm.resetValidation();
   openPopup(popupCard);
 })
 
