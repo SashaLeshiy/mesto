@@ -1,14 +1,20 @@
 import Popup from '../scripts/Popup.js';
+import Section from '../scripts/Section.js'
 
 export default class PopupWithForm extends Popup {
-    constructor (data, selectorPopup) {
+    constructor ({ callback }, selectorPopup) {
         super(selectorPopup);
-        this._callback = data.callback;
+        this._callback = callback;
         this._element = document.querySelector(this._selector);
 }
     _getInputValues() {
-
-    }
+        this._inputList = this._element.querySelectorAll('.input__text');
+        this._formValues = {};
+        this._inputList.forEach(input => {
+            this._formValues[input.name] = input.value;
+          }); 
+        return this._formValues;  
+     }
     
     setEventListeners() {
         this._element.querySelector('.popup__close').addEventListener('click', () => {
@@ -22,11 +28,16 @@ export default class PopupWithForm extends Popup {
             this.close();
             }
         })
-        this._element.addEventListener('submit', this._callback);
+        this._element.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._callback(this._getInputValues());
+            this.close();
+        });
     }
 
     close() {
         this._element.classList.remove('popup_opened');
+        this._element.querySelector('.input').reset();
 
     }
 

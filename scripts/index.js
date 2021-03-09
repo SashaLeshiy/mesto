@@ -90,6 +90,36 @@ const cards = new Section({ items: initialCards,
 
 cards.renderItems();
 
+//открытие окна редактирование профиля
+editButton.addEventListener('click', () => {
+  nameInput.value = profileName.textContent;
+  careerInput.value = career.textContent;
+  validProfileForm.resetValidation();
+  const popupProfile = new PopupWithForm({ callback:
+                                      (formData) => {
+                                      profileName.textContent = nameInput.value;
+                                      career.textContent = careerInput.value;
+                                    }
+                                    },'#profile');
+  popupProfile.open();
+});
+
+//открытие окна добавления карточки
+addButton.addEventListener('click', () => {
+  namePlace.value = '';
+  linkPlace.value = '';
+  validAddForm.resetValidation();
+  const popupCards = new PopupWithForm({ callback:
+                                      (formData) => {
+                                      const data = ({'name':namePlace.value, 'link':linkPlace.value});
+                                      const card = new Card(data, '#element', showImg);
+                                      const cardElement = card.generateCard(); 
+                                      cards.addItem(cardElement); 
+                                    }
+                                    },'#cards');
+  popupCards.open();
+})
+
 // //добавление карточек из массива 
 // initialCards.forEach((item) => {
 //   addElem(item);
@@ -177,40 +207,6 @@ function showImg(evt){
 //   document.addEventListener('keydown', handleCloseByEsc);
 // }
 
-//открытие окна редактирование профиля
-editButton.addEventListener('click', () => {
-  nameInput.value = profileName.textContent;
-  careerInput.value = career.textContent;
-  validProfileForm.resetValidation();
-  const open = new PopupWithForm({ callback:
-                                      (evt) => {
-                                      evt.preventDefault();
-                                      profileName.textContent = nameInput.value;
-                                      career.textContent = careerInput.value;
-                                      // const close = new PopupWithForm('#profile');
-                                      // close.close();
-                                    }
-                                    },'#profile');
-  open.open();
-});
 
-//открытие окна добавления карточки
-addButton.addEventListener('click', () => {
-  namePlace.value = '';
-  linkPlace.value = '';
-  validAddForm.resetValidation();
-  const open = new PopupWithForm({ callback:
-                                      (evt) => {
-                                      evt.preventDefault();
-                                      const data = ({'name':namePlace.value, 'link':linkPlace.value});
-                                      const card = new Card(data, '#element', showImg);
-                                      const cardElement = card.generateCard(); 
-                                      cardElements.prepend(cardElement);   
-                                      // const close = new PopupWithForm('#cards');
-                                      this.close();
-                                    }
-                                    },'#cards');
-  open.open();
-})
 
 
