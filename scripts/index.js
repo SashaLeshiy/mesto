@@ -86,10 +86,9 @@ editButton.addEventListener('click', () => {
   const profileData = new UserInfo(profileName.textContent, career.textContent);
   profileData.getUserInfo();
   validProfileForm.resetValidation();
-  const popupProfile = new PopupWithForm({ callback:
-                                      () => {
-                                      const newProfile = new UserInfo(nameInput.value, careerInput.value);
-                                      newProfile.setUserInfo(); 
+  const popupProfile = new PopupWithForm({ callback: (formData) => {
+                                        const newProfile = new UserInfo(formData.nameSubject, formData.careerSubject);
+                                        newProfile.setUserInfo(); 
                                     }
                                     },'#profile');
   popupProfile.open();
@@ -100,10 +99,10 @@ addButton.addEventListener('click', () => {
   namePlace.value = '';
   linkPlace.value = '';
   validAddForm.resetValidation();
-  const popupCards = new PopupWithForm({ callback:
-                                      () => {
-                                      const data = ({'name':namePlace.value, 'link':linkPlace.value});
+  const popupCards = new PopupWithForm({ callback: (formData) => {
+                                      const data = ({'name':formData.nameElement, 'link':formData.linkElement});
                                       const card = new Card(data, '#element', showImg);
+                                      console.log(card);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
                                     }

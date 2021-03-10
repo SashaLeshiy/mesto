@@ -22,7 +22,7 @@ export default class PopupWithForm extends Popup {
         });
         document.addEventListener('keydown', (evt) => {
             this._handleEscClose(evt);
-        });
+        }); 
         this._element.addEventListener('click', (evt) => {
             if(evt.target.classList.contains('popup')) {
             this.close();
@@ -30,17 +30,14 @@ export default class PopupWithForm extends Popup {
         })
         this._element.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._callback();
+            this._callback(this._getInputValues());
             this.close();
             
         });
     }
 
     close() {
-        this._element.querySelector('.input').reset();
         this._element.classList.remove('popup_opened');
-        
-
-    }
+        }
 
 }
