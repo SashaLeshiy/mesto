@@ -10,7 +10,6 @@ export default class Card {
         const newCardElement = document
         .querySelector(this._cardSelector).content
         .cloneNode(true);
-
         return newCardElement;
     }
 
@@ -22,7 +21,7 @@ export default class Card {
         this._cardImage.setAttribute('alt', this._name);
         this._element.querySelector('.element__heading').textContent = this._name;
         this._setEventListener();
-
+        
         return this._element;
     }
 

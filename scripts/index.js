@@ -4,6 +4,7 @@ import Section from '../scripts/Section.js';
 import Popup from './Popup.js';
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
+import UserInfo from './UserInfo.js'
 
 //массив с дефолтными карточками
 const initialCards = [
@@ -42,10 +43,10 @@ const openImg = document.querySelector('#bigImage');// переменная вс
 export const closeButtons = document.querySelectorAll('.popup__close'); // закрывающая окно
 const formElement = document.querySelector('.input_profile'); // элементы в всплывающем окне
 const formCard = document.querySelector('.input_card'); // элементы в всплывающем окне добавления карточки
-const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
-const careerInput = document.querySelector('.input__text_text_career');// селектор для работы
-const profileName = document.querySelector('.profile__heading'); // переменнная Имени в профиле
-const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
+export const nameInput = document.querySelector('.input__text_text_name'); // селектор для Имени
+export const careerInput = document.querySelector('.input__text_text_career');// селектор для работы
+export const profileName = document.querySelector('.profile__heading'); // переменнная Имени в профиле
+export const career = document.querySelector('.profile__subheading'); // переменнная работы в профиле
 const namePlace = document.querySelector('.input__text_text_element') //селектор название места
 const linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
 export const bigImage = document.querySelector('.popup__image');// окно с картинкой
@@ -70,16 +71,6 @@ const popupList = document.querySelectorAll('.popup');// все попапы
   }, formList[1]);
   validAddForm.enableValidation();
 
-  
-
-
-// // Добавление новой карточки
-// const addElem = (elem) => {
-//   const cards = new Card(elem, '#element', showImg);
-//   const cardElement = cards.generateCard();
-//   cardElements.prepend(cardElement);
-// }
-
 const cards = new Section({ items: initialCards,
                             renderer:  (elem) => {
                               const card = new Card(elem, '#element', showImg);
@@ -92,13 +83,13 @@ cards.renderItems();
 
 //открытие окна редактирование профиля
 editButton.addEventListener('click', () => {
-  nameInput.value = profileName.textContent;
-  careerInput.value = career.textContent;
+  const profileData = new UserInfo(profileName.textContent, career.textContent);
+  profileData.getUserInfo();
   validProfileForm.resetValidation();
   const popupProfile = new PopupWithForm({ callback:
-                                      (formData) => {
-                                      profileName.textContent = nameInput.value;
-                                      career.textContent = careerInput.value;
+                                      () => {
+                                      const newProfile = new UserInfo(nameInput.value, careerInput.value);
+                                      newProfile.setUserInfo(); 
                                     }
                                     },'#profile');
   popupProfile.open();
@@ -110,15 +101,30 @@ addButton.addEventListener('click', () => {
   linkPlace.value = '';
   validAddForm.resetValidation();
   const popupCards = new PopupWithForm({ callback:
-                                      (formData) => {
+                                      () => {
                                       const data = ({'name':namePlace.value, 'link':linkPlace.value});
                                       const card = new Card(data, '#element', showImg);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
                                     }
-                                    },'#cards');
+                                    },'#cards');                             
   popupCards.open();
 })
+
+function showImg(evt){
+  evt.preventDefault();
+  const popupImage = new PopupWithImage({ src: evt.target.src, text: evt.target.getAttribute('alt')}, '#bigImage');
+  popupImage.open();
+}
+
+
+// // Добавление новой карточки
+// const addElem = (elem) => {
+//   const cards = new Card(elem, '#element', showImg);
+//   const cardElement = cards.generateCard();
+//   cardElements.prepend(cardElement);
+// }
+
 
 // //добавление карточек из массива 
 // initialCards.forEach((item) => {
@@ -139,14 +145,7 @@ addButton.addEventListener('click', () => {
 //   // closePopup(popupCard);
 // }
 
-function showImg(evt){
-  evt.preventDefault();
-  const popupImage = new PopupWithImage({ src: evt.target.src, text: evt.target.getAttribute('alt')}, '#bigImage');
-  popupImage.open();
-  // bigImage.src = evt.target.src;
-  // imageName.textContent = evt.target.getAttribute('alt');
-  // openPopup(openImg);
-}
+
 
 //закрытие попап окон
 // function closePopup(elem) {
