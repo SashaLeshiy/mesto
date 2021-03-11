@@ -4,7 +4,7 @@
   "description": "* HTML5\r * CSS3\r * JavaScript\r * БЭМ\r * Figma",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && webpack",
+    "build": "rd /s /q dist && webpack",
     "dev": "webpack serve"
   },
   "repository": {
