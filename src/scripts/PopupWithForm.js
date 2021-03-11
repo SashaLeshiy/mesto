@@ -15,29 +15,39 @@ export default class PopupWithForm extends Popup {
           }); 
         return this._formValues;  
      }
-    
+
+      
     setEventListeners() {
         this._element.querySelector('.popup__close').addEventListener('click', () => {
             this.close();
         });
+
         document.addEventListener('keydown', (evt) => {
             this._handleEscClose(evt);
         }); 
+
         this._element.addEventListener('click', (evt) => {
             if(evt.target.classList.contains('popup')) {
             this.close();
             }
         })
-        this._element.addEventListener('submit', (evt) => {
+        
+        this._element.addEventListener('submit', (evt) =>{
+            console.log(this._element);
             evt.preventDefault();
             this._callback(this._getInputValues());
             this.close();
-            
-        });
+        });    
     }
 
     close() {
         this._element.classList.remove('popup_opened');
+        this._element.querySelector('.input').reset();
+
+        // document.removeEventListener('keydown', (evt) => {
+        //     this._handleEscClose(evt);
+        // });
+        
         }
 
 }

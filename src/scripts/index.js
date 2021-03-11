@@ -95,14 +95,13 @@ editButton.addEventListener('click', () => {
 });
 
 //открытие окна добавления карточки
-addButton.addEventListener('click', () => {
-  namePlace.value = '';
-  linkPlace.value = '';
+addButton.addEventListener('click', () => {                                  
+  // namePlace.value = '';
+  // linkPlace.value = '';
   validAddForm.resetValidation();
   const popupCards = new PopupWithForm({ callback: (formData) => {
                                       const data = ({'name':formData.nameElement, 'link':formData.linkElement});
                                       const card = new Card(data, '#element', showImg);
-                                      console.log(card);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
                                     }
