@@ -7,8 +7,10 @@ export default class PopupWithForm extends Popup {
         this._callback = callback;
         // this._element = document.querySelector(this._selector);
 }
+    
     _getInputValues() {
         this._inputList = this._element.querySelectorAll('.input__text');
+        
         this._formValues = {};
         this._inputList.forEach(input => {
             this._formValues[input.name] = input.value;
@@ -16,38 +18,42 @@ export default class PopupWithForm extends Popup {
         return this._formValues;  
      }
 
-      
+
     setEventListeners() {
+        
         this._element.querySelector('.popup__close').addEventListener('click', () => {
+            this._element.removeEventListener('submit', func);
             this.close();
         });
 
-        document.addEventListener('keydown', (evt) => {
+        const escClose = (evt) => {
+            this._element.removeEventListener('submit', func);
             this._handleEscClose(evt);
-        }); 
+        }
+        document.addEventListener('keydown', escClose); 
 
         this._element.addEventListener('click', (evt) => {
             if(evt.target.classList.contains('popup')) {
+            this._element.removeEventListener('submit', func);
             this.close();
             }
         })
-        
-        this._element.addEventListener('submit', (evt) =>{
-            console.log(this._element);
+
+        const func = (evt) => {
             evt.preventDefault();
-            this._callback(this._getInputValues());
+            this._callback(this._getInputValues);
+            this._element.removeEventListener('submit', func);
             this.close();
-        });    
+        };
+
+        this._element.addEventListener('submit', func);
+           
     }
 
     close() {
         this._element.classList.remove('popup_opened');
         this._element.querySelector('.input').reset();
 
-        // document.removeEventListener('keydown', (evt) => {
-        //     this._handleEscClose(evt);
-        // });
-        
         }
 
 }

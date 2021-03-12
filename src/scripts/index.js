@@ -86,12 +86,12 @@ editButton.addEventListener('click', () => {
   const profileData = new UserInfo(profileName.textContent, career.textContent);
   profileData.getUserInfo();
   validProfileForm.resetValidation();
-  const popupProfile = new PopupWithForm({ callback: (formData) => {
-                                        const newProfile = new UserInfo(formData.nameSubject, formData.careerSubject);
-                                        newProfile.setUserInfo(); 
+  const popProfile = new PopupWithForm({ callback: () => {
+                                        const userInfo = new UserInfo(nameInput.value, careerInput.value);
+                                        userInfo.setUserInfo(); 
                                     }
-                                    },'#profile');
-  popupProfile.open();
+                                    }, popupProfile);
+  popProfile.open();
 });
 
 //открытие окна добавления карточки
@@ -99,19 +99,19 @@ addButton.addEventListener('click', () => {
   // namePlace.value = '';
   // linkPlace.value = '';
   validAddForm.resetValidation();
-  const popupCards = new PopupWithForm({ callback: (formData) => {
-                                      const data = ({'name':formData.nameElement, 'link':formData.linkElement});
+  const popupCards = new PopupWithForm({ callback: () => {
+                                      const data = ({'name':namePlace.value, 'link':linkPlace.value});
                                       const card = new Card(data, '#element', showImg);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
                                     }
-                                    },'#cards');                             
+                                    }, popupCard);                             
   popupCards.open();
 })
 
 function showImg(evt){
   evt.preventDefault();
-  const popupImage = new PopupWithImage({ src: evt.target.src, text: evt.target.getAttribute('alt')}, '#bigImage');
+  const popupImage = new PopupWithImage({ src: evt.target.src, text: evt.target.getAttribute('alt')}, openImg);
   popupImage.open();
 }
 
@@ -187,7 +187,7 @@ function showImg(evt){
 //   close.close();
 // });
 
-// // добавление новой карточки с данными
+// добавление новой карточки с данными
 // formCard.addEventListener('submit', (evt) => {
 //   evt.preventDefault();
 //   const data = ({'name':namePlace.value, 'link':linkPlace.value});
