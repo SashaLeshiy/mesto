@@ -6,8 +6,15 @@ export default class PopupWithForm extends Popup {
         super(selectorPopup);
         this._callback = callback;
         // this._element = document.querySelector(this._selector);
+        const func = (evt) => {
+            evt.preventDefault();
+            this._callback(this._getInputValues);
+            this._element.removeEventListener('submit', func);
+            this.close();
+        };
+        this._func = func.bind(this);
 }
-    
+
     _getInputValues() {
         this._inputList = this._element.querySelectorAll('.input__text');
         
@@ -20,40 +27,32 @@ export default class PopupWithForm extends Popup {
 
 
     setEventListeners() {
-        
-        this._element.querySelector('.popup__close').addEventListener('click', () => {
-            this._element.removeEventListener('submit', func);
-            this.close();
-        });
+        super.setEventListeners();
+        // this._element.querySelector('.popup__close').addEventListener('click', () => {
+        //     this.close();
+        // });
 
-        const escClose = (evt) => {
-            this._element.removeEventListener('submit', func);
-            this._handleEscClose(evt);
-        }
-        document.addEventListener('keydown', escClose); 
+        // // const escClose = (evt) => {
+        // //     evt.preventDefault();
+        // //     this._handleEscClose(evt);
+        // // }
 
-        this._element.addEventListener('click', (evt) => {
-            if(evt.target.classList.contains('popup')) {
-            this._element.removeEventListener('submit', func);
-            this.close();
-            }
-        })
+        // // document.addEventListener('keydown', escClose); 
 
-        const func = (evt) => {
-            evt.preventDefault();
-            this._callback(this._getInputValues);
-            this._element.removeEventListener('submit', func);
-            this.close();
-        };
+        // this._element.addEventListener('click', (evt) => {
+        //     if(evt.target.classList.contains('popup')) {
+        //     this.close();
+        //     }
+        // })
 
-        this._element.addEventListener('submit', func);
+        this._element.addEventListener('submit', this._func);
            
     }
 
     close() {
         this._element.classList.remove('popup_opened');
         this._element.querySelector('.input').reset();
-
+        this._element.removeEventListener('submit', this._func);
         }
 
 }
