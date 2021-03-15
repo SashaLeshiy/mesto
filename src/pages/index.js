@@ -1,10 +1,10 @@
-import Card from '../src/scripts/Card.js';
-import FormValidator from '../src/scripts/FormValidator.js';
-import Section from '../src/scripts/Section.js';
-import PopupWithForm from '../src/scripts/PopupWithForm.js';
-import PopupWithImage from '../src/scripts/PopupWithImage.js';
-import UserInfo from '../src/scripts/UserInfo.js';
-import '../src/pages/index.css';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
+import './index.css';
 import { initialCards, 
         cardElements, 
         editButton, 
@@ -19,7 +19,7 @@ import { initialCards,
         career, 
         nameInput, 
         careerInput
-} from '../src/utils/constants.js';
+} from '../utils/constants.js';
 
   const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',

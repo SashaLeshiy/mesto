@@ -1,4 +1,4 @@
-import Popup from '../scripts/Popup.js';
+import Popup from '../components/Popup.js';
 import { bigImage, imageName } from '../utils/constants.js';
 
 export default class PopupWithImage extends Popup {
