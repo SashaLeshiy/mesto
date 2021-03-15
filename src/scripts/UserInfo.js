@@ -1,4 +1,4 @@
-import { profileName, career, nameInput, careerInput } from '../scripts/index.js';
+import { profileName, career, nameInput, careerInput } from '../utils/constants.js';
 
 export default class UserInfo {
     constructor(nameUser, infoUser) {

@@ -1,11 +1,9 @@
 import Popup from '../scripts/Popup.js';
-import Section from '../scripts/Section.js'
 
 export default class PopupWithForm extends Popup {
     constructor ({ callback }, selectorPopup) {
         super(selectorPopup);
         this._callback = callback;
-        // this._element = document.querySelector(this._selector);
         const func = (evt) => {
             evt.preventDefault();
             this._callback(this._getInputValues);
@@ -28,23 +26,7 @@ export default class PopupWithForm extends Popup {
 
     setEventListeners() {
         super.setEventListeners();
-        // this._element.querySelector('.popup__close').addEventListener('click', () => {
-        //     this.close();
-        // });
-
-        // // const escClose = (evt) => {
-        // //     evt.preventDefault();
-        // //     this._handleEscClose(evt);
-        // // }
-
-        // // document.addEventListener('keydown', escClose); 
-
-        // this._element.addEventListener('click', (evt) => {
-        //     if(evt.target.classList.contains('popup')) {
-        //     this.close();
-        //     }
-        // })
-
+       
         this._element.addEventListener('submit', this._func);
            
     }

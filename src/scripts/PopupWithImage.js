@@ -1,5 +1,5 @@
 import Popup from '../scripts/Popup.js';
-import { bigImage, imageName } from '../scripts/index.js';
+import { bigImage, imageName } from '../utils/constants.js';
 
 export default class PopupWithImage extends Popup {
     constructor (data, selectorPopup) {
