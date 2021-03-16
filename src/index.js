@@ -47,18 +47,17 @@ cards.renderItems();
 //открытие окна редактирование профиля
 const profileData = new UserInfo(profileName, career);
 
-
-const popProfile = new PopupWithForm({ callback: () => {
-                                      
-                                      // const userInfo = new UserInfo();
-                                      // userInfo.setUserInfo(); 
+const popProfile = new PopupWithForm({ callback: (elems) => {
+                                    profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
                                     }
                                     }, '#profile');
+popProfile.setEventListeners();
 
 editButton.addEventListener('click', () => {
   
+  nameInput.value = profileData.getUserInfo().name; 
+  careerInput.value = profileData.getUserInfo().info;
   validProfileForm.resetValidation();
-  popProfile.setEventListeners();
   popProfile.open();
 });
 

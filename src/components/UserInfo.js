@@ -1,10 +1,7 @@
-// import { profileName, career, nameInput, careerInput } from '../utils/constants.js';
-
 export default class UserInfo {
     constructor(nameElem, infoElem) {
         this._name = nameElem;
         this._info = infoElem;
-        
     }
 
     getUserInfo() {
@@ -14,8 +11,8 @@ export default class UserInfo {
          }
     }
 
-    setUserInfo() {
-        // profileName.textContent = this._name;
-        // career.textContent = this._info;
+    setUserInfo(nameEl, infoEl) {
+        this._name.textContent = nameEl;
+        this._info.textContent = infoEl;
     }
 }
