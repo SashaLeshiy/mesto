@@ -1,25 +1,25 @@
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import UserInfo from './components/UserInfo.js';
-import './pages/index.css';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
+import './index.css';
 import { initialCards, 
         cardElements, 
         editButton, 
         addButton, 
-        popupProfile, 
-        popupCard, 
-        openImg,
-        namePlace,
-        linkPlace,
+        // popupProfile, 
+        // popupCard, 
+        // openImg,
+        // namePlace,
+        // linkPlace,
         formList, 
         profileName, 
         career, 
         nameInput, 
         careerInput
-} from './utils/constants.js';
+} from '../utils/constants.js';
 
   const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
@@ -54,26 +54,28 @@ const popProfile = new PopupWithForm({ callback: (elems) => {
 popProfile.setEventListeners();
 
 editButton.addEventListener('click', () => {
-  
   nameInput.value = profileData.getUserInfo().name; 
   careerInput.value = profileData.getUserInfo().info;
   validProfileForm.resetValidation();
   popProfile.open();
 });
 
-// //открытие окна добавления карточки
-// addButton.addEventListener('click', () => { 
-//   validAddForm.resetValidation();
-//   const popupCards = new PopupWithForm({ callback: () => {
-//                                       const data = ({'name':namePlace.value, 'link':linkPlace.value});
-//                                       const card = new Card(data, '#element', showImg);
-//                                       const cardElement = card.generateCard(); 
-//                                       cards.addItem(cardElement); 
-//                                     }
-//                                     }, '#cards');                             
-//   popupCards.open();
-// })
+//открытие окна добавления карточки
+const popupCards = new PopupWithForm({ callback: (elems) => {
+                                      const data = ({name: elems.nameElement, link: elems.linkElement});
+                                      const card = new Card(data, '#element', showImg);
+                                      const cardElement = card.generateCard(); 
+                                      cards.addItem(cardElement); 
+}
+}, '#cards');
+popupCards.setEventListeners();
 
+addButton.addEventListener('click', () => { 
+  validAddForm.resetValidation();            
+  popupCards.open();
+})
+
+// открытие попапа с картинкой
 const popupImage = new PopupWithImage('#bigImage');
 
 function showImg(evt){
