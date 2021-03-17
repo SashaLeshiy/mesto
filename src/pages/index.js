@@ -9,11 +9,6 @@ import { initialCards,
         cardElements, 
         editButton, 
         addButton, 
-        // popupProfile, 
-        // popupCard, 
-        // openImg,
-        // namePlace,
-        // linkPlace,
         formList, 
         profileName, 
         career, 
@@ -77,10 +72,10 @@ addButton.addEventListener('click', () => {
 
 // открытие попапа с картинкой
 const popupImage = new PopupWithImage('#bigImage');
+popupImage.setEventListeners();
 
 function showImg(evt){
   evt.preventDefault();
-  popupImage.setEventListeners();
   popupImage.open({src: evt.target.src, text: evt.target.getAttribute('alt')});
 }
 
