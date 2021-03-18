@@ -15,25 +15,31 @@ export default class Card {
 
     generateCard() {
         this._element = this._getTemplate();
+
+        this._cardName = this._element.querySelector('.element__heading');
         this._cardImage = this._element.querySelector('.element__image');
+        this._trashButton = this._element.querySelector('.element__trash');
+        this._likeButton = this._element.querySelector('.element__like');
+
         
         this._cardImage.src = this._link;
         this._cardImage.setAttribute('alt', this._name);
-        this._element.querySelector('.element__heading').textContent = this._name;
+        this._cardName.textContent = this._name;
+
         this._setEventListener();
         
         return this._element;
     }
 
     _setEventListener() {
-        this._element.querySelector('.element__trash').addEventListener('click', (evt) => {
+        this._trashButton.addEventListener('click', (evt) => {
             this._deleteElem(evt);
         });
-        this._element.querySelector('.element__like').addEventListener('click', (evt) => {
+        this._likeButton.addEventListener('click', (evt) => {
             this._likeElem(evt);
         });
-        this._cardImage.addEventListener('click', (evt) => {
-            this._showImg(evt);
+        this._cardImage.addEventListener('click', () => {
+            this._showImg(this._name, this._link);
         });
     }
 

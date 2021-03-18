@@ -44,6 +44,7 @@ const profileData = new UserInfo(profileName, career);
 
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                     profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
+                                    popProfile.close();
                                     }
                                     }, '#profile');
 popProfile.setEventListeners();
@@ -61,7 +62,7 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                       const card = new Card(data, '#element', showImg);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
-}
+                                      popupCards.close();}
 }, '#cards');
 popupCards.setEventListeners();
 
@@ -74,9 +75,9 @@ addButton.addEventListener('click', () => {
 const popupImage = new PopupWithImage('#bigImage');
 popupImage.setEventListeners();
 
-function showImg(evt){
-  evt.preventDefault();
-  popupImage.open({src: evt.target.src, text: evt.target.getAttribute('alt')});
+function showImg(name, link){
+  popupImage.open({src: link, text: name});
+  // popupImage.open({src: evt.target.src, text: evt.target.getAttribute('alt')});
 }
 
 
