@@ -5,16 +5,50 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import './index.css';
-import { initialCards, 
+import { //initialCards, 
         cardElements, 
         editButton, 
         addButton, 
         formList, 
         profileName, 
         career, 
+        userAvatar,
         nameInput, 
         careerInput
 } from '../utils/constants.js';
+import Api from '../components/Api.js';
+
+const config = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-21/',
+  headers: {
+    authorization: '8df10295-759e-4055-b075-ee2c8fc5cf8c',
+    'Content-Type': 'application/json'
+  }
+};
+const api = new Api(config);
+
+
+api.getUserInfo()
+.then((result) => {
+  profileName.textContent = result.name;
+  career.textContent = result.about;
+  userAvatar.style.backgroundImage = `url('${result.avatar}')`;
+})
+.catch((err) => {
+  console.log(err); 
+}); 
+
+api.getInitialCards()
+.then((result) => {
+  const initialCards = [];
+  result.forEach( elem => {
+    initialCards.push(`name: ${elem.name}, link: ${elem.link}`);
+  })
+})
+.catch((err) => {
+  console.log(err); 
+}); 
+ 
 
   const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',

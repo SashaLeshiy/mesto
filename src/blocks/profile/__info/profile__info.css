@@ -9,7 +9,7 @@
   padding-left: 26px;
 }
 
-@media screen and (max-width: 416px) {
+@media screen and (max-width: 459px) {
   .profile__info {
     margin: 0 auto;
     text-align: center;
