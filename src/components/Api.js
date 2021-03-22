@@ -37,7 +37,27 @@ getInitialCards() {
         console.log(err); 
       });    
  }
-} 
+
+
+setUser(userName, info) {
+  return fetch(`${this.url}users/me`, {
+  method: 'PATCH',
+  headers: this.headers,
+  body: JSON.stringify({
+    name: userName,
+    about: info
+  }),
+  })
+  .then(res => {
+      if (res.ok) {
+        return res.json();
+      }   
+    })
+  .catch((err) => {
+      console.log(err); 
+    });
+}
+
 
 // export const api = new Api({
 //     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21/cards',
@@ -46,4 +66,4 @@ getInitialCards() {
 //       'Content-Type': 'application/json'
 //     }
 //   });
-
+}

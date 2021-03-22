@@ -40,11 +40,15 @@ api.getUserInfo()
 
 api.getInitialCards()
 .then((result) => {
-  const initialCards = [];
-  result.forEach( elem => {
-    initialCards.push(`name: ${elem.name}, link: ${elem.link}`);
+  cards.renderItems(result);
+  // const initialCards = [];
+  // result.forEach( elem => {
+  //   console.log(elem);
+  //   initialCards.push(`name: ${elem.name}, link: ${elem.link}`);
   })
-})
+  
+  // cards.renderItems(initialCards);
+// })
 .catch((err) => {
   console.log(err); 
 }); 
@@ -64,18 +68,18 @@ api.getInitialCards()
   }, formList[1]);
   validAddForm.enableValidation();
 
-const cards = new Section({ items: initialCards,
-                            renderer:  (elem) => {
+const cards = new Section({   renderer:  (elem) => {
                               const card = new Card(elem, '#element', showImg);
                               const cardElement = card.generateCard();
                               cards.addItem(cardElement);
                               }
                              }, cardElements);
-cards.renderItems();
+
+// cards.renderItems(initialCards);
+
 
 //открытие окна редактирование профиля
 const profileData = new UserInfo(profileName, career);
-
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                     profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
                                     popProfile.close();
