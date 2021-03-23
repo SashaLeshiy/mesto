@@ -18,12 +18,11 @@ close() {
     super.close();
 }
 
-
 setEventListeners() {
     super.setEventListeners();
     this._element.addEventListener('submit', (evt) => {
         evt.preventDefault();
-        // this._callback(this._getInputValues());
+        this.close(evt.target);
     });
 }
 

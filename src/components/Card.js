@@ -35,7 +35,10 @@ export default class Card {
 
     _setEventListener() {
         this._trashButton.addEventListener('click', (evt) => {
-            this._deleteElem(evt);
+            const confirmDel = new PopupConfirmDelete('#confirmDelete');
+            confirmDel.open();
+            confirmDel.setEventListeners();
+            // this._deleteElem(evt);
         });
         this._likeButton.addEventListener('click', (evt) => {
             this._likeElem(evt);
@@ -46,10 +49,7 @@ export default class Card {
     }
 
     _deleteElem(evt) {
-        const confirmDel = new PopupConfirmDelete('#confirmDelete');
-        confirmDel.open();
-        confirmDel.setEventListeners();
-        // evt.target.closest('.element').remove();
+        evt.target.closest('.element').remove();
     }
 
     _likeElem(evt) {
