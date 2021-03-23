@@ -1,3 +1,5 @@
+import PopupConfirmDelete from "./PopupConfirmDelete";
+
 export default class Card {
     constructor(data, cardSelector, func){
         this._name = data.name;
@@ -19,7 +21,7 @@ export default class Card {
         this._cardName = this._element.querySelector('.element__heading');
         this._cardImage = this._element.querySelector('.element__image');
         this._trashButton = this._element.querySelector('.element__trash');
-        this._likeButton = this._element.querySelector('.element__like');
+        this._likeButton = this._element.querySelector('.element__like'); 
 
         
         this._cardImage.src = this._link;
@@ -44,7 +46,10 @@ export default class Card {
     }
 
     _deleteElem(evt) {
-        evt.target.closest('.element').remove();
+        const confirmDel = new PopupConfirmDelete('#confirmDelete');
+        confirmDel.open();
+        confirmDel.setEventListeners();
+        // evt.target.closest('.element').remove();
     }
 
     _likeElem(evt) {

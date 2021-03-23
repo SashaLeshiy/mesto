@@ -58,12 +58,23 @@ setUser(userName, info) {
     });
 }
 
+setCard(cardName, link) {
+  return fetch(`${this.url}cards`, {
+  method: 'POST',
+  headers: this.headers,
+  body: JSON.stringify({
+    name: cardName,
+    link: link
+  }),
+  })
+  .then(res => {
+      if (res.ok) {
+        return res.json();
+      }   
+    })
+  .catch((err) => {
+      console.log(err); 
+    });
+}
 
-// export const api = new Api({
-//     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21/cards',
-//     headers: {
-//       authorization: '8df10295-759e-4055-b075-ee2c8fc5cf8c',
-//       'Content-Type': 'application/json'
-//     }
-//   });
 }

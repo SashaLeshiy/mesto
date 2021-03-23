@@ -41,14 +41,7 @@ api.getUserInfo()
 api.getInitialCards()
 .then((result) => {
   cards.renderItems(result);
-  // const initialCards = [];
-  // result.forEach( elem => {
-  //   console.log(elem);
-  //   initialCards.push(`name: ${elem.name}, link: ${elem.link}`);
   })
-  
-  // cards.renderItems(initialCards);
-// })
 .catch((err) => {
   console.log(err); 
 }); 
@@ -82,6 +75,7 @@ const cards = new Section({   renderer:  (elem) => {
 const profileData = new UserInfo(profileName, career);
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                     profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
+                                    api.setUser(elems.nameSubject, elems.careerSubject);
                                     popProfile.close();
                                     }
                                     }, '#profile');
@@ -100,6 +94,7 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                       const card = new Card(data, '#element', showImg);
                                       const cardElement = card.generateCard(); 
                                       cards.addItem(cardElement); 
+                                      api.setCard(elems.nameElement, elems.linkElement);
                                       popupCards.close();}
 }, '#cards');
 popupCards.setEventListeners();
