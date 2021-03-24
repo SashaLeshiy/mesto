@@ -23,6 +23,8 @@
 @import url('../blocks/element/__text/element__text.css');
 @import url('../blocks/element/__heading/element__heading.css');
 @import url('../blocks/element/__like/element__like.css');
+@import url('../blocks/element/__likes/element__likes.css');
+@import url('../blocks/element/__likeCount/element__likeCount.css');
 @import url('../blocks/element/__like/element__like_black.css');
 @import url('../blocks/element/__trash/element__trash.css');
 @import url('../blocks/popup/popup.css');
@@ -41,4 +43,4 @@
 @import url('../blocks/input/__save/input__save.css');
 @import url('../blocks/input/__save/input__save_active.css');
 @import url('../blocks/popup/__deleteConfirm/popup__deleteConfirm.css');
-@import url('../blocks/popup/__yes/popup__yes.css');
+@import url('../blocks/popup/__confirm/popup__confirm.css');

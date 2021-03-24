@@ -38,6 +38,23 @@ getInitialCards() {
       });    
  }
 
+ getLikeCount() {
+  return fetch(`${this.url}cards`, {
+    headers: this.headers,
+    })
+  .then(res => {
+  if (res.ok) {
+    return res.json();
+    }   
+    })
+  .then(data => {
+      return data;
+      })
+  .catch((err) => {
+      console.log(err); 
+    });  
+ }
+
 
 setUser(userName, info) {
   return fetch(`${this.url}users/me`, {
@@ -75,6 +92,36 @@ setCard(cardName, link) {
   .catch((err) => {
       console.log(err); 
     });
+}
+
+putLike(cardId) {
+  return fetch(`${this.url}cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: this.headers,
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        }   
+      })
+    .catch((err) => {
+        console.log(err); 
+      });
+}
+
+deleteLike(cardId) {
+  return fetch(`${this.url}cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: this.headers,
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        }   
+      })
+    .catch((err) => {
+        console.log(err); 
+      });
 }
 
 }

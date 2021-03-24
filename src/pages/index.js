@@ -25,7 +25,7 @@ const config = {
     'Content-Type': 'application/json'
   }
 };
-const api = new Api(config);
+export const api = new Api(config);
 
 
 api.getUserInfo()
@@ -46,6 +46,17 @@ api.getInitialCards()
   console.log(err); 
 }); 
  
+api.getLikeCount()
+.then((result) => {
+  result.forEach(item => {
+    return item.likes.length;
+  })
+})
+.catch((err) => {
+  console.log(err); 
+}); 
+
+
 
   const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
@@ -67,8 +78,6 @@ const cards = new Section({   renderer:  (elem) => {
                               cards.addItem(cardElement);
                               }
                              }, cardElements);
-
-// cards.renderItems(initialCards);
 
 
 //открытие окна редактирование профиля

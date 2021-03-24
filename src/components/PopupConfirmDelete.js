@@ -20,10 +20,9 @@ close() {
 
 setEventListeners() {
     super.setEventListeners();
-    this._element.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        this.close(evt.target);
-    });
+    // this._element.addEventListener('submit', (evt) => {
+    //     evt.preventDefault();
+        
 }
 
 }

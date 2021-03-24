@@ -1,4 +1,6 @@
-import PopupConfirmDelete from "./PopupConfirmDelete";
+import PopupConfirmDelete from "./PopupConfirmDelete.js";
+import { api } from "../pages/index.js";
+
 
 export default class Card {
     constructor(data, cardSelector, func){
@@ -6,6 +8,9 @@ export default class Card {
         this._link = data.link;
         this._cardSelector = cardSelector;
         this._showImg = func;
+        this._likes = data.likes;
+        this._idCard = data._id;
+        this._ownerId = data.owner._id;
     }
 
     _getTemplate() {
@@ -22,11 +27,13 @@ export default class Card {
         this._cardImage = this._element.querySelector('.element__image');
         this._trashButton = this._element.querySelector('.element__trash');
         this._likeButton = this._element.querySelector('.element__like'); 
+        this._likeCount = this._element.querySelector('.element__likeCount');
 
-        
+                       
         this._cardImage.src = this._link;
         this._cardImage.setAttribute('alt', this._name);
         this._cardName.textContent = this._name;
+        this._likeCount.textContent = this._likes.length;
 
         this._setEventListener();
         
@@ -40,8 +47,8 @@ export default class Card {
             confirmDel.setEventListeners();
             // this._deleteElem(evt);
         });
-        this._likeButton.addEventListener('click', (evt) => {
-            this._likeElem(evt);
+        this._likeButton.addEventListener('click', () => {
+            this._likeElem(this._likeButton);
         });
         this._cardImage.addEventListener('click', () => {
             this._showImg(this._name, this._link);
@@ -52,8 +59,10 @@ export default class Card {
         evt.target.closest('.element').remove();
     }
 
-    _likeElem(evt) {
-        evt.target.classList.toggle('element__like_black');
+    _likeElem(likeButton) {
+                api.putLike(this._idCard);
+                this._likeCount.textContent = this._likes.length + 1;
+                likeButton.classList.toggle('element__like_black');
+           
     }
-
 }
