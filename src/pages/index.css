@@ -27,6 +27,7 @@
 @import url('../blocks/element/__likeCount/element__likeCount.css');
 @import url('../blocks/element/__like/element__like_black.css');
 @import url('../blocks/element/__trash/element__trash.css');
+@import url('../blocks/element/__trash/element__trash_visible.css');
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popupImg/popupImg.css');
 @import url('../blocks/popup/_opened/popup_opened.css');

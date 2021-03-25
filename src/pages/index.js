@@ -73,7 +73,7 @@ api.getLikeCount()
   validAddForm.enableValidation();
 
 const cards = new Section({   renderer:  (elem) => {
-                              const card = new Card(elem, '#element', showImg);
+                              const card = new Card(elem, '#element', showImg, api);
                               const cardElement = card.generateCard();
                               cards.addItem(cardElement);
                               }
@@ -99,10 +99,16 @@ editButton.addEventListener('click', () => {
 
 //открытие окна добавления карточки
 const popupCards = new PopupWithForm({ callback: (elems) => {
-                                      const data = ({name: elems.nameElement, link: elems.linkElement});
-                                      const card = new Card(data, '#element', showImg);
-                                      const cardElement = card.generateCard(); 
+                                      const data = ({name: elems.nameElement,
+                                                     link: elems.linkElement,
+                                                     likes:[],
+                                                     owner: {
+                                                      _id: '' }
+                                      });
+                                      const card = new Card(data, '#element', showImg, api);
+                                      const cardElement = card.generateCard();
                                       cards.addItem(cardElement); 
+                                      console.log(elems);
                                       api.setCard(elems.nameElement, elems.linkElement);
                                       popupCards.close();}
 }, '#cards');
@@ -121,6 +127,8 @@ function showImg(name, link){
   popupImage.open({src: link, text: name});
   // popupImage.open({src: evt.target.src, text: evt.target.getAttribute('alt')});
 }
+
+
 
 
 

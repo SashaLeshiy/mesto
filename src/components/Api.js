@@ -94,6 +94,22 @@ setCard(cardName, link) {
     });
 }
 
+deleteCard(cardId) {
+  return fetch(`${this.url}cards/${cardId}`, {
+    method: 'DELETE',
+    headers: this.headers,
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        }   
+      })
+    .catch((err) => {
+        console.log(err); 
+      });
+}
+
+
 putLike(cardId) {
   return fetch(`${this.url}cards/likes/${cardId}`, {
     method: 'PUT',
@@ -103,7 +119,7 @@ putLike(cardId) {
         if (res.ok) {
           return res.json();
         }   
-      })
+      }) 
     .catch((err) => {
         console.log(err); 
       });
@@ -118,7 +134,7 @@ deleteLike(cardId) {
         if (res.ok) {
           return res.json();
         }   
-      })
+      })  
     .catch((err) => {
         console.log(err); 
       });
