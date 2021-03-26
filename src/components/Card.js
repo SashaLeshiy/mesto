@@ -3,7 +3,7 @@ import { api } from "../pages/index.js";
 
 
 export default class Card {
-    constructor(data, cardSelector, func, api){
+    constructor(data, cardSelector, func, api, confirmDel){
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -11,6 +11,7 @@ export default class Card {
         this._likes = data.likes;
         this._idCard = data._id;
         this._ownerId = data.owner._id;
+        this._confirmDel = confirmDel;
         this._api = api;
     }
 
@@ -21,12 +22,13 @@ export default class Card {
         return newCardElement;
     }
 
-    _isLike(){
+    _isLike(){ 
+        
         if(this._likes.length === 0) {
-            return true 
+            return false 
         } else {      
         this._likes.forEach(like => {
-            if(!like._id === 'ae5c6565fcfc7aa92249dcab') {
+            if(like._id === 'ae5c6565fcfc7aa92249dcab') {
                 return true;
             } else {
                 return false;
@@ -52,11 +54,13 @@ export default class Card {
         this._likeButton = this._element.querySelector('.element__like'); 
         this._likeCount = this._element.querySelector('.element__likeCount');
         
+
+       
        if(this._isOwner()) {
         this._trashButton.classList.add('element__trash_visible');
        } 
         
-       if(!this._isLike()) {
+       if(this._isLike()) {
         this._likeButton.classList.add('element__like_black');
        }
 
@@ -77,13 +81,13 @@ export default class Card {
     }
 
     _setEventListener() {
-        this._trashButton.addEventListener('click', (evt) => {
-            // this._callback();
+        this._trashButton.addEventListener('click', () => {
+            this._confirmDel();
             // const confirmDel = new PopupConfirmDelete('#confirmDelete');
             // confirmDel.open();
             // confirmDel.setEventListeners();
-            api.deleteCard(this._idCard);
-            this._deleteElem(evt);
+            // api.deleteCard(this._idCard);
+            // this._deleteElem(evt);
             
         });
         this._likeButton.addEventListener('click', () => {
@@ -99,18 +103,21 @@ export default class Card {
     }
 
     _likeElem(likeButton) {
-        if(this._isLike()) {
-        console.log(this._isLike());
-        api.putLike(this._idCard)
-        .then(data => {
-            console.log(data);
-        }); 
+        api.getLike()
+        .then(result => {
+        result.forEach(item => {
+            console.log(item);
+        })
+        })
+        
+        if(!this._isLike()) {
+        api.putLike(this._idCard);
         this._likeCount.textContent = this._likes.length + 1;
         likeButton.classList.add('element__like_black');
         } else {
         api.deleteLike(this._idCard)
         .then(data => {
-            console.log(data);
+            // console.log(data);
         });
         this._likeCount.textContent = this._likes.length - 1;
         likeButton.classList.remove('element__like_black');

@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupConfirmDelete from '../components/PopupConfirmDelete.js';
 import UserInfo from '../components/UserInfo.js';
 import './index.css';
 import { //initialCards, 
@@ -17,6 +18,7 @@ import { //initialCards,
         careerInput
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
+import PopupAvatar from '../components/PopupAvatar.js';
 
 const config = {
   url: 'https://mesto.nomoreparties.co/v1/cohort-21/',
@@ -46,15 +48,15 @@ api.getInitialCards()
   console.log(err); 
 }); 
  
-api.getLikeCount()
-.then((result) => {
-  result.forEach(item => {
-    return item.likes.length;
-  })
-})
-.catch((err) => {
-  console.log(err); 
-}); 
+// api.getLike()
+// .then((result) => {
+//   result.forEach(item => {
+//     return item;
+//   })
+// })
+// .catch((err) => {
+//   console.log(err); 
+// }); 
 
 
 
@@ -71,6 +73,13 @@ api.getLikeCount()
       errorClass: 'input__text-error_active'
   }, formList[1]);
   validAddForm.enableValidation();
+
+  const validAvatarForm = new FormValidator ({
+    activeButtonClass: 'input__save_active',
+    inputErrors: Array.from(formList[2].querySelectorAll(`.input__text-error`)),
+    errorClass: 'input__text-error_active'
+  }, formList[2]);
+  validAvatarForm.enableValidation();
 
 const cards = new Section({   renderer:  (elem) => {
                               const card = new Card(elem, '#element', showImg, api);
@@ -105,10 +114,9 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      owner: {
                                                       _id: '' }
                                       });
-                                      const card = new Card(data, '#element', showImg, api);
+                                      const card = new Card(data, '#element', showImg, api, confirmDeleteCard);
                                       const cardElement = card.generateCard();
                                       cards.addItem(cardElement); 
-                                      console.log(elems);
                                       api.setCard(elems.nameElement, elems.linkElement);
                                       popupCards.close();}
 }, '#cards');
@@ -125,9 +133,26 @@ popupImage.setEventListeners();
 
 function showImg(name, link){
   popupImage.open({src: link, text: name});
-  // popupImage.open({src: evt.target.src, text: evt.target.getAttribute('alt')});
 }
 
+function confirmDeleteCard(){
+  const confirmDel = new PopupConfirmDelete('#confirmDelete');
+            confirmDel.open();
+            confirmDel.setEventListeners();
+}
+
+userAvatar.addEventListener('click', () => {
+  validAddForm.resetValidation();
+  avatar.open();
+})
+
+const avatar = new PopupAvatar({ callback: (avaLink) => {
+                                userAvatar.style.backgroundImage = `url('${avaLink}')`;
+                                api.setAvatar(avaLink);
+                                avatar.close();
+  }
+  },'#avatar');
+avatar.setEventListeners();
 
 
 

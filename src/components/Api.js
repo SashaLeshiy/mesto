@@ -38,7 +38,7 @@ getInitialCards() {
       });    
  }
 
- getLikeCount() {
+getLike() {
   return fetch(`${this.url}cards`, {
     headers: this.headers,
     })
@@ -47,9 +47,11 @@ getInitialCards() {
     return res.json();
     }   
     })
-  .then(data => {
-      return data;
-      })
+  // .then(result => {
+  //     result.forEach(item => {
+  //       return item;
+  //     })
+  //   })  
   .catch((err) => {
       console.log(err); 
     });  
@@ -135,6 +137,24 @@ deleteLike(cardId) {
           return res.json();
         }   
       })  
+    .catch((err) => {
+        console.log(err); 
+      });
+}
+
+setAvatar(link) {
+  return fetch(`${this.url}users/me/avatar`, {
+    method: 'PATCH',
+    headers: this.headers,
+    body: JSON.stringify({
+      avatar: link
+    }),
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        }   
+      })
     .catch((err) => {
         console.log(err); 
       });

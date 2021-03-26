@@ -43,3 +43,4 @@
   export const bigImage = document.querySelector('.popup__image');// окно с картинкой
   export const imageName = document.querySelector('.popup__imageName'); // подпись к картинке
   export const formList = Array.from(document.querySelectorAll('form'));
+  
