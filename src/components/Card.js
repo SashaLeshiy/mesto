@@ -3,7 +3,7 @@ import { api } from "../pages/index.js";
 
 
 export default class Card {
-    constructor(data, cardSelector, func, api, confirmDel){
+    constructor(data, cardSelector, func, api, confirmDelete){
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -11,7 +11,7 @@ export default class Card {
         this._likes = data.likes;
         this._idCard = data._id;
         this._ownerId = data.owner._id;
-        this._confirmDel = confirmDel;
+        this._confirmDelete = confirmDelete;
         this._api = api;
     }
 
@@ -82,13 +82,7 @@ export default class Card {
 
     _setEventListener() {
         this._trashButton.addEventListener('click', () => {
-            this._confirmDel();
-            // const confirmDel = new PopupConfirmDelete('#confirmDelete');
-            // confirmDel.open();
-            // confirmDel.setEventListeners();
-            // api.deleteCard(this._idCard);
-            // this._deleteElem(evt);
-            
+            this._confirmDelete();
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._likeButton);

@@ -22,10 +22,6 @@ setEventListeners() {
        
 }
 
-// setAva(avaLink) {
-//     userAvatar.style.backgroundImage = `url('${avaLink}')`;
-// }
-
 close() {
     super.close();
     this._element.querySelector('.input').reset();

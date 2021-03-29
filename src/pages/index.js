@@ -6,7 +6,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupConfirmDelete from '../components/PopupConfirmDelete.js';
 import UserInfo from '../components/UserInfo.js';
 import './index.css';
-import { //initialCards, 
+import {
         cardElements, 
         editButton, 
         addButton, 
@@ -82,7 +82,7 @@ api.getInitialCards()
   validAvatarForm.enableValidation();
 
 const cards = new Section({   renderer:  (elem) => {
-                              const card = new Card(elem, '#element', showImg, api);
+                              const card = new Card(elem, '#element', showImg, api, confirmDeleteCard);
                               const cardElement = card.generateCard();
                               cards.addItem(cardElement);
                               }
@@ -135,11 +135,17 @@ function showImg(name, link){
   popupImage.open({src: link, text: name});
 }
 
-function confirmDeleteCard(){
-  const confirmDel = new PopupConfirmDelete('#confirmDelete');
-            confirmDel.open();
-            confirmDel.setEventListeners();
+function confirmDeleteCard() {
+    const confirmDel = new PopupConfirmDelete('#confirmDelete');
+    confirmDel.open();
+    document.querySelector('#confirmDelete').addEventListener('submit', () => {
+      console.log('колбэк');
+    });
+    // confirmDel.setEventListeners();
+            // api.deleteCard(this._idCard);
+            // this._deleteElem(evt);
 }
+
 
 userAvatar.addEventListener('click', () => {
   validAddForm.resetValidation();

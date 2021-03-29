@@ -1,4 +1,5 @@
 import Popup from '../components/Popup.js';
+import { api } from '../pages/index.js';
 
 export default class PopupConfirmDelete extends Popup {
     constructor (selectorPopup) {
@@ -18,11 +19,19 @@ close() {
     super.close();
 }
 
+_deleteElem() {
+    console.log(this._element);
+    this._element.close();
+    api.deleteCard(cardId);
+    this._element.removeEventListener('submit', this._deleteElem);
+}
+
 setEventListeners() {
     super.setEventListeners();
-    // this._element.addEventListener('submit', (evt) => {
-    //     evt.preventDefault();
-        
+    this._element.addEventListener('submit', this._deleteElem);
 }
+
+
+
 
 }

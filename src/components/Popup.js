@@ -31,5 +31,6 @@ export default class Popup {
             this.close(evt.target);
             }
         });
+
     }
 }
