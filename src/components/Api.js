@@ -46,12 +46,7 @@ getLike() {
   if (res.ok) {
     return res.json();
     }   
-    })
-  // .then(result => {
-  //     result.forEach(item => {
-  //       return item;
-  //     })
-  //   })  
+    }) 
   .catch((err) => {
       console.log(err); 
     });  

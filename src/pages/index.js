@@ -112,7 +112,7 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      link: elems.linkElement,
                                                      likes:[],
                                                      owner: {
-                                                      _id: '' }
+                                                      _id: 'ae5c6565fcfc7aa92249dcab' }
                                       });
                                       const card = new Card(data, '#element', showImg, api, confirmDeleteCard);
                                       const cardElement = card.generateCard();
