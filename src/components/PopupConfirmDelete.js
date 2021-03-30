@@ -19,15 +19,12 @@ close() {
     super.close();
 }
 
-// _deleteElem() {
-//     api.deleteCard(cardId);
-//     this._element.removeEventListener('submit', this._deleteElem);
-// }
-
-setEventListeners() {
+setEventListeners(cardId, element) {
     super.setEventListeners();
-    this._element.addEventListener('submit', () => {
-        console.log('колбэк');
+    this._element.addEventListener('click', () => {
+        api.deleteCard(cardId);
+        element.remove();
+        this.close();
     });
     };
 

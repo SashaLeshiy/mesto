@@ -70,7 +70,7 @@ const validProfileForm = new FormValidator ({
   validAvatarForm.enableValidation();
 
 const cards = new Section({   renderer:  (elem) => {
-                              const card = new Card(elem, '#element', showImg, api);
+                              const card = new Card(elem, '#element', showImg, api, confirmDelete);
                               const cardElement = card.generateCard();
                               cards.addItem(cardElement);
                               }
@@ -102,7 +102,7 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      owner: {
                                                       _id: 'ae5c6565fcfc7aa92249dcab' }
                                       });
-                                      const card = new Card(data, '#element', showImg, api);
+                                      const card = new Card(data, '#element', showImg, api, confirmDelete);
                                       const cardElement = card.generateCard();
                                       cards.addItem(cardElement); 
                                       api.setCard(elems.nameElement, elems.linkElement);
@@ -135,6 +135,21 @@ const avatar = new PopupAvatar({ callback: (avaLink) => {
   }
   },'#avatar');
 avatar.setEventListeners();
+
+function confirmDelete(cardId, element) {
+const popupConfirmDelete = new PopupConfirmDelete('#confirmDelete');
+popupConfirmDelete.open();
+popupConfirmDelete.setEventListeners(cardId, element);
+// // const confirmPopup = document.querySelector('#confirmDelete');
+// // confirmPopup.addEventListener('click', (evt) => {
+// //   evt.preventDefault();
+// //   // api.deleteCard(cardId);
+// //   // element.closest('.element').remove();
+//   popupConfirmDelete.close();
+// })
+}
+
+
 
 
 
