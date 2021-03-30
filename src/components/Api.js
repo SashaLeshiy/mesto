@@ -38,15 +38,15 @@ getInitialCards() {
       });    
  }
 
-getLike() {
-  return fetch(`${this.url}cards`, {
+getLike(cardId) {
+  return fetch(`${this.url}cards/likes/${cardId}`, {
     headers: this.headers,
     })
   .then(res => {
   if (res.ok) {
     return res.json();
     }   
-    }) 
+    })   
   .catch((err) => {
       console.log(err); 
     });  

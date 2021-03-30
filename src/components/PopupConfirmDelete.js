@@ -19,17 +19,17 @@ close() {
     super.close();
 }
 
-_deleteElem() {
-    console.log(this._element);
-    this._element.close();
-    api.deleteCard(cardId);
-    this._element.removeEventListener('submit', this._deleteElem);
-}
+// _deleteElem() {
+//     api.deleteCard(cardId);
+//     this._element.removeEventListener('submit', this._deleteElem);
+// }
 
 setEventListeners() {
     super.setEventListeners();
-    this._element.addEventListener('submit', this._deleteElem);
-}
+    this._element.addEventListener('submit', () => {
+        console.log('колбэк');
+    });
+    };
 
 
 

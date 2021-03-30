@@ -48,19 +48,7 @@ api.getInitialCards()
   console.log(err); 
 }); 
  
-// api.getLike()
-// .then((result) => {
-//   result.forEach(item => {
-//     return item;
-//   })
-// })
-// .catch((err) => {
-//   console.log(err); 
-// }); 
-
-
-
-  const validProfileForm = new FormValidator ({
+const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
         inputErrors: Array.from(formList[0].querySelectorAll(`.input__text-error`)),
         errorClass: 'input__text-error_active'
@@ -82,7 +70,7 @@ api.getInitialCards()
   validAvatarForm.enableValidation();
 
 const cards = new Section({   renderer:  (elem) => {
-                              const card = new Card(elem, '#element', showImg, api, confirmDeleteCard);
+                              const card = new Card(elem, '#element', showImg, api);
                               const cardElement = card.generateCard();
                               cards.addItem(cardElement);
                               }
@@ -114,7 +102,7 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      owner: {
                                                       _id: 'ae5c6565fcfc7aa92249dcab' }
                                       });
-                                      const card = new Card(data, '#element', showImg, api, confirmDeleteCard);
+                                      const card = new Card(data, '#element', showImg, api);
                                       const cardElement = card.generateCard();
                                       cards.addItem(cardElement); 
                                       api.setCard(elems.nameElement, elems.linkElement);
@@ -134,18 +122,6 @@ popupImage.setEventListeners();
 function showImg(name, link){
   popupImage.open({src: link, text: name});
 }
-
-function confirmDeleteCard() {
-    const confirmDel = new PopupConfirmDelete('#confirmDelete');
-    confirmDel.open();
-    document.querySelector('#confirmDelete').addEventListener('submit', () => {
-      console.log('колбэк');
-    });
-    // confirmDel.setEventListeners();
-            // api.deleteCard(this._idCard);
-            // this._deleteElem(evt);
-}
-
 
 userAvatar.addEventListener('click', () => {
   validAddForm.resetValidation();

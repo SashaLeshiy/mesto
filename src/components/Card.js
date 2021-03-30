@@ -3,7 +3,7 @@ import { api } from "../pages/index.js";
 
 
 export default class Card {
-    constructor(data, cardSelector, func, api, confirmDelete){
+    constructor(data, cardSelector, func, api){
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -11,7 +11,6 @@ export default class Card {
         this._likes = data.likes;
         this._idCard = data._id;
         this._ownerId = data.owner._id;
-        this._confirmDelete = confirmDelete;
         this._api = api;
     }
 
@@ -22,20 +21,7 @@ export default class Card {
         return newCardElement;
     }
 
-    _isLike(){ 
-        if(this._likes.length === 0) {
-            return false 
-        } else {      
-        this._likes.forEach(like => {
-            if(like._id === 'ae5c6565fcfc7aa92249dcab') {
-                return true;
-            } else {
-                return false;
-            }
-        })
-        }
-    }
-
+    
     _isOwner(){
         if(this._ownerId === 'ae5c6565fcfc7aa92249dcab') {
             return true;
@@ -59,10 +45,6 @@ export default class Card {
         this._trashButton.classList.add('element__trash_visible');
        } 
         
-       if(this._isLike()) {
-        this._likeButton.classList.add('element__like_black');
-       }
-
         this._cardImage.src = this._link;
         this._cardImage.setAttribute('alt', this._name);
         this._cardName.textContent = this._name;
@@ -81,7 +63,7 @@ export default class Card {
 
     _setEventListener() {
         this._trashButton.addEventListener('click', () => {
-            this._confirmDelete();
+            this._confirmDelete(this._idCard);
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._idCard);
@@ -91,28 +73,5 @@ export default class Card {
         });
     }
 
-    _deleteElem(evt) {
-        evt.target.closest('.element').remove();
-    }
-
-    _likeElem() {
-        api.getLike()
-        .then(result => {
-            console.log(result);
-        })
-        
-        // if(!this._isLike()) {
-        // api.putLike(this._idCard);
-        // this._likeCount.textContent = this._likes.length + 1;
-        // likeButton.classList.add('element__like_black');
-        // } else {
-        // api.deleteLike(this._idCard)
-        // .then(data => {
-        //     // console.log(data);
-        // });
-        // this._likeCount.textContent = this._likes.length - 1;
-        // likeButton.classList.remove('element__like_black');
-        // }
-           
-    }
+    
 }
