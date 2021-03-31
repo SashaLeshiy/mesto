@@ -58,9 +58,32 @@ export default class Card {
         this._likeCount.textContent = this._likes.length;
        }
 
+       this._likes.forEach(like => {
+           if(like._id === 'ae5c6565fcfc7aa92249dcab') {
+               this._likeButton.classList.add('element__like_black');
+           }
+       })
+
         this._setEventListener(this._elem);
         
         return this._element;
+    }
+
+    _likeElem(cardId){
+        this._likes.forEach(like => {
+            if(like._id === 'ae5c6565fcfc7aa92249dcab') {
+                api.deleteLike(cardId);
+                this._likeCount.textContent = this._likes.length - 1;
+                this._likeButton.classList.remove('element__like_black');
+            } else {
+                api.putLike(cardId)
+                this._likeCount.textContent = this._likes.length + 1;
+                this._likeButton.classList.add('element__like_black');
+            }
+        })
+        api.putLike(cardId)
+        this._likeCount.textContent = this._likes.length + 1;
+        this._likeButton.classList.add('element__like_black');
     }
 
     _setEventListener(element) {

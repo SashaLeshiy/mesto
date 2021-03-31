@@ -104,8 +104,8 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                       });
                                       const card = new Card(data, '#element', showImg, api, confirmDelete);
                                       const cardElement = card.generateCard();
-                                      cards.addItem(cardElement); 
                                       api.setCard(elems.nameElement, elems.linkElement);
+                                      cards.addItem(cardElement); 
                                       popupCards.close();}
 }, '#cards');
 popupCards.setEventListeners();
@@ -137,17 +137,16 @@ const avatar = new PopupAvatar({ callback: (avaLink) => {
 avatar.setEventListeners();
 
 function confirmDelete(cardId, element) {
-const popupConfirmDelete = new PopupConfirmDelete('#confirmDelete');
+const popupConfirmDelete = new PopupConfirmDelete({ callback: () => {
+                                                    api.deleteCard(cardId);
+                                                    element.remove();
+                                                    popupConfirmDelete.close(cardId, element);
+                                                  }
+                                                  },'#confirmDelete');
 popupConfirmDelete.open();
 popupConfirmDelete.setEventListeners(cardId, element);
-// // const confirmPopup = document.querySelector('#confirmDelete');
-// // confirmPopup.addEventListener('click', (evt) => {
-// //   evt.preventDefault();
-// //   // api.deleteCard(cardId);
-// //   // element.closest('.element').remove();
-//   popupConfirmDelete.close();
-// })
 }
+
 
 
 

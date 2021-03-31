@@ -2,8 +2,9 @@ import Popup from '../components/Popup.js';
 import { api } from '../pages/index.js';
 
 export default class PopupConfirmDelete extends Popup {
-    constructor (selectorPopup) {
+    constructor ({ callback }, selectorPopup) {
         super(selectorPopup);
+        this._callback = callback;
 }
 _handleEscClose(evt) {
     if(evt.key === 'Escape') {
@@ -15,20 +16,13 @@ open() {
     super.open();
 }
 
-close() {
+close(cardId, element) {
     super.close();
+    this._element.querySelector('.popup__confirm').removeEventListener('click', this._callback);
 }
 
 setEventListeners(cardId, element) {
     super.setEventListeners();
-    this._element.addEventListener('click', () => {
-        api.deleteCard(cardId);
-        element.remove();
-        this.close();
-    });
-    };
-
-
-
-
+    this._element.querySelector('.popup__confirm').addEventListener('click', this._callback);
+}
 }
