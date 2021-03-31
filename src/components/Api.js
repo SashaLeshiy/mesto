@@ -86,9 +86,6 @@ setCard(cardName, link) {
         return res.json();
       }   
     })
-  .then(res => {
-    console.log(res._id);
-  })  
   .catch((err) => {
       console.log(err); 
     });

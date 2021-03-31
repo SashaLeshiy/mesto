@@ -69,21 +69,27 @@ export default class Card {
         return this._element;
     }
 
+    newCardId() {
+        return this._idCard;
+    }
+
     _likeElem(cardId){
-        this._likes.forEach(like => {
-            if(like._id === 'ae5c6565fcfc7aa92249dcab') {
-                api.deleteLike(cardId);
-                this._likeCount.textContent = this._likes.length - 1;
+        if(this._likeButton.classList.contains('element__like_black')) {
+            api.deleteLike(cardId)
+            .then(() => {
                 this._likeButton.classList.remove('element__like_black');
-            } else {
-                api.putLike(cardId)
-                this._likeCount.textContent = this._likes.length + 1;
-                this._likeButton.classList.add('element__like_black');
-            }
-        })
-        api.putLike(cardId)
-        this._likeCount.textContent = this._likes.length + 1;
-        this._likeButton.classList.add('element__like_black');
+            })
+            .then(() => {
+            this._likeCount.textContent = this._likes.length - 1;
+            })
+            .catch(err => {
+                console.log(err);
+              })
+        } else {
+            api.putLike(cardId);
+            this._likeButton.classList.add('element__like_black');
+            this._likeCount.textContent = this._likes.length + 1;
+        }
     }
 
     _setEventListener(element) {

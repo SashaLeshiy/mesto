@@ -96,18 +96,37 @@ editButton.addEventListener('click', () => {
 
 //открытие окна добавления карточки
 const popupCards = new PopupWithForm({ callback: (elems) => {
+                                      api.setCard(elems.nameElement, elems.linkElement)
+                                      .then(res => {
                                       const data = ({name: elems.nameElement,
                                                      link: elems.linkElement,
                                                      likes:[],
+                                                     _id: res._id,
                                                      owner: {
                                                       _id: 'ae5c6565fcfc7aa92249dcab' }
                                       });
                                       const card = new Card(data, '#element', showImg, api, confirmDelete);
                                       const cardElement = card.generateCard();
-                                      api.setCard(elems.nameElement, elems.linkElement);
-                                      cards.addItem(cardElement); 
-                                      popupCards.close();}
-}, '#cards');
+                                      cards.addItem(cardElement);
+                                      popupCards.close();
+                                      })
+                                      // .then (() => {
+                                      
+                                      // api.setCard(elems.nameElement, elems.linkElement)
+                                      // .then(res => {
+                                      //   data._id = res._id;
+                                      // })
+                                      // .then(() => {
+                                      // cards.addItem(cardElement); 
+                                      // })
+                                      // .then(() => {
+                                      // popupCards.close();
+                                      // })
+                                      // })
+                                      .catch(err => {
+                                        console.log(err);
+                                      })
+}}, '#cards');
 popupCards.setEventListeners();
 
 addButton.addEventListener('click', () => { 
@@ -138,9 +157,16 @@ avatar.setEventListeners();
 
 function confirmDelete(cardId, element) {
 const popupConfirmDelete = new PopupConfirmDelete({ callback: () => {
-                                                    api.deleteCard(cardId);
-                                                    element.remove();
-                                                    popupConfirmDelete.close(cardId, element);
+                                                    api.deleteCard(cardId)
+                                                    .then(() => {
+                                                      element.remove();
+                                                    })
+                                                    .then(() => {
+                                                      popupConfirmDelete.close(cardId, element);
+                                                    })
+                                                    .catch( err => {
+                                                      conaole.log(err);
+                                                    })
                                                   }
                                                   },'#confirmDelete');
 popupConfirmDelete.open();
