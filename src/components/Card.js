@@ -1,4 +1,3 @@
-import PopupConfirmDelete from "./PopupConfirmDelete.js";
 import { api } from "../pages/index.js";
 
 
@@ -69,26 +68,25 @@ export default class Card {
         return this._element;
     }
 
-    newCardId() {
-        return this._idCard;
-    }
-
     _likeElem(cardId){
-        if(this._likeButton.classList.contains('element__like_black')) {
-            api.deleteLike(cardId)
-            .then(() => {
-                this._likeButton.classList.remove('element__like_black');
+        if(!this._likeButton.classList.contains('element__like_black')) {
+            api.putLike(cardId)
+            .then(res => {
+                this._likeButton.classList.add('element__like_black');
+                this._likeCount.textContent = res.likes.length;
+            })    
+            .catch(err => {
+                console.log(err);
             })
-            .then(() => {
-            this._likeCount.textContent = this._likes.length - 1;
+        } else {
+            api.deleteLike(cardId)
+            .then(res => {
+                this._likeButton.classList.remove('element__like_black');
+                this._likeCount.textContent = res.likes.length;
             })
             .catch(err => {
                 console.log(err);
-              })
-        } else {
-            api.putLike(cardId);
-            this._likeButton.classList.add('element__like_black');
-            this._likeCount.textContent = this._likes.length + 1;
+              }) 
         }
     }
 

@@ -1,5 +1,4 @@
 import Popup from '../components/Popup.js';
-import { api } from '../pages/index.js';
 
 export default class PopupConfirmDelete extends Popup {
     constructor ({ callback }, selectorPopup) {

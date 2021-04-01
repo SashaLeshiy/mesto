@@ -15,7 +15,8 @@ import {
         career, 
         userAvatar,
         nameInput, 
-        careerInput
+        careerInput, 
+        textButton
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 import PopupAvatar from '../components/PopupAvatar.js';
@@ -80,11 +81,22 @@ const cards = new Section({   renderer:  (elem) => {
 //открытие окна редактирование профиля
 const profileData = new UserInfo(profileName, career);
 const popProfile = new PopupWithForm({ callback: (elems) => {
-                                    profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
-                                    api.setUser(elems.nameSubject, elems.careerSubject);
-                                    popProfile.close();
-                                    }
-                                    }, '#profile');
+                                      renderLoading(true, '#profile');
+                                      api.setUser(elems.nameSubject, elems.careerSubject)
+                                      .then (() => {
+                                        profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
+                                      })
+                                      .then (() => {
+                                        popProfile.close();
+                                      })
+                                      .catch(err => {
+                                        console.log(err);
+                                      })
+                                      .finally(() => {
+                                        renderLoading(false, '#profile');
+                                      });
+                                      }
+                                      }, '#profile');
 popProfile.setEventListeners();
 
 editButton.addEventListener('click', () => {
@@ -96,6 +108,7 @@ editButton.addEventListener('click', () => {
 
 //открытие окна добавления карточки
 const popupCards = new PopupWithForm({ callback: (elems) => {
+                                      renderLoading(true, '#cards');
                                       api.setCard(elems.nameElement, elems.linkElement)
                                       .then(res => {
                                       const data = ({name: elems.nameElement,
@@ -104,30 +117,32 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      _id: res._id,
                                                      owner: {
                                                       _id: 'ae5c6565fcfc7aa92249dcab' }
-                                      });
-                                      const card = new Card(data, '#element', showImg, api, confirmDelete);
-                                      const cardElement = card.generateCard();
-                                      cards.addItem(cardElement);
+                                      })
+                                        const card = new Card(data, '#element', showImg, api, confirmDelete);
+                                        const cardElement = card.generateCard();
+                                        cards.addItem(cardElement);
+                                      })
+                                      .then(() => {
                                       popupCards.close();
                                       })
-                                      // .then (() => {
-                                      
-                                      // api.setCard(elems.nameElement, elems.linkElement)
-                                      // .then(res => {
-                                      //   data._id = res._id;
-                                      // })
-                                      // .then(() => {
-                                      // cards.addItem(cardElement); 
-                                      // })
-                                      // .then(() => {
-                                      // popupCards.close();
-                                      // })
-                                      // })
                                       .catch(err => {
                                         console.log(err);
                                       })
+                                      .finally(() => {
+                                        renderLoading(false, '#cards');
+                                      });
 }}, '#cards');
 popupCards.setEventListeners();
+
+function renderLoading(isLoading, idPopup) {
+  const element = document.querySelector(`${idPopup}`);
+  const buttonElem = element.querySelector('.input__save');
+  if(isLoading) {
+    buttonElem.textContent = 'Создание...';
+  } else {
+    buttonElem.textContent = textButton;
+  }
+}
 
 addButton.addEventListener('click', () => { 
   validAddForm.resetValidation();            
@@ -142,19 +157,33 @@ function showImg(name, link){
   popupImage.open({src: link, text: name});
 }
 
+// слушатель на аватар
 userAvatar.addEventListener('click', () => {
   validAddForm.resetValidation();
   avatar.open();
 })
 
+
 const avatar = new PopupAvatar({ callback: (avaLink) => {
+                                renderLoading(true, '#avatar');
+                                api.setAvatar(avaLink)
+                                .then(() => {
                                 userAvatar.style.backgroundImage = `url('${avaLink}')`;
-                                api.setAvatar(avaLink);
+                                })
+                                .then(() => {
                                 avatar.close();
+                                })
+                                .catch(err => {
+                                  console.log(err);
+                                })
+                                .finally(() => {
+                                  renderLoading(false, '#avatar');
+                                });
   }
   },'#avatar');
 avatar.setEventListeners();
 
+//подтверждение удаления карточки
 function confirmDelete(cardId, element) {
 const popupConfirmDelete = new PopupConfirmDelete({ callback: () => {
                                                     api.deleteCard(cardId)

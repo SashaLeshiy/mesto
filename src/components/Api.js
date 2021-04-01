@@ -11,7 +11,8 @@ getUserInfo() {
     .then(res => {
         if (res.ok) {
           return res.json();
-        }   
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);   
       })
     .then(data => {
           return data;
@@ -28,7 +29,8 @@ getInitialCards() {
     .then(res => {
       if (res.ok) {
         return res.json();
-      }   
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);   
     })
     .then(data => {
         return data;
@@ -37,21 +39,6 @@ getInitialCards() {
         console.log(err); 
       });    
  }
-
-getLike(cardId) {
-  return fetch(`${this.url}cards/likes/${cardId}`, {
-    headers: this.headers,
-    })
-  .then(res => {
-  if (res.ok) {
-    return res.json();
-    }   
-    })   
-  .catch((err) => {
-      console.log(err); 
-    });  
- }
-
 
 setUser(userName, info) {
   return fetch(`${this.url}users/me`, {
@@ -66,9 +53,7 @@ setUser(userName, info) {
       if (res.ok) {
         return res.json();
       }   
-    })
-  .catch((err) => {
-      console.log(err); 
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
 }
 
@@ -85,9 +70,7 @@ setCard(cardName, link) {
       if (res.ok) {
         return res.json();
       }   
-    })
-  .catch((err) => {
-      console.log(err); 
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
 }
 
@@ -99,10 +82,8 @@ deleteCard(cardId) {
     .then(res => {
         if (res.ok) {
           return res.json();
-        }   
-      })
-    .catch((err) => {
-        console.log(err); 
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);   
       });
 }
 
@@ -115,10 +96,8 @@ putLike(cardId) {
     .then(res => {
         if (res.ok) {
           return res.json();
-        }   
-      }) 
-    .catch((err) => {
-        console.log(err); 
+        }  
+        return Promise.reject(`Ошибка: ${res.status}`);   
       });
 }
 
@@ -130,10 +109,8 @@ deleteLike(cardId) {
     .then(res => {
         if (res.ok) {
           return res.json();
-        }   
-      })  
-    .catch((err) => {
-        console.log(err); 
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);     
       });
 }
 
@@ -148,10 +125,8 @@ setAvatar(link) {
     .then(res => {
         if (res.ok) {
           return res.json();
-        }   
-      })
-    .catch((err) => {
-        console.log(err); 
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);   
       });
 }
 
