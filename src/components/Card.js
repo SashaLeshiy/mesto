@@ -2,7 +2,7 @@ import { api } from "../pages/index.js";
 
 
 export default class Card {
-    constructor(data, cardSelector, func, api, confirmDelete){
+    constructor(data, cardSelector, func, api, popupConfirmDelete, userId){
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -10,8 +10,9 @@ export default class Card {
         this._likes = data.likes;
         this._idCard = data._id;
         this._ownerId = data.owner._id;
-        this._confirmDelete = confirmDelete;
+        this._confirmDelete = popupConfirmDelete;
         this._api = api;
+        this._userId = userId;
     }
 
     _getTemplate() {
@@ -22,15 +23,15 @@ export default class Card {
     }
 
     
-    _isOwner(){
-        if(this._ownerId === 'ae5c6565fcfc7aa92249dcab') {
+    _isOwner(userId){
+        if(this._ownerId === userId) {
             return true;
         } else {
             return false;
         }
     }
 
-    generateCard() {
+    generateCard(userId) {
         this._element = this._getTemplate();
 
         this._cardName = this._element.querySelector('.element__heading');
@@ -42,7 +43,7 @@ export default class Card {
         
 
        
-       if(this._isOwner()) {
+       if(this._isOwner(userId)) {
         this._trashButton.classList.add('element__trash_visible');
        } 
         
@@ -58,7 +59,7 @@ export default class Card {
        }
 
        this._likes.forEach(like => {
-           if(like._id === 'ae5c6565fcfc7aa92249dcab') {
+           if(like._id === userId) {
                this._likeButton.classList.add('element__like_black');
            }
        })
@@ -90,9 +91,10 @@ export default class Card {
         }
     }
 
-    _setEventListener(element) {
+    _setEventListener(elem) {
         this._trashButton.addEventListener('click', () => {
-            this._confirmDelete(this._idCard, element);
+            this._confirmDelete(this._idCard, elem);
+            // this._confirmDelete(this._idCard, element);
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._idCard);

@@ -30,27 +30,51 @@ const config = {
 };
 export const api = new Api(config);
 
+let userId;
 
-api.getUserInfo()
-.then((result) => {
-  profileName.textContent = result.name;
-  career.textContent = result.about;
-  userAvatar.style.backgroundImage = `url('${result.avatar}')`;
-})
-.catch((err) => {
-  console.log(err); 
-}); 
-
-api.getInitialCards()
-.then((result) => {
-  cards.renderItems(result);
-  })
-.catch((err) => {
-  console.log(err); 
-}); 
+const promise1 = new Promise((resolve, reject) => {
+  api.getUserInfo().onload = resolve;
+  api.getUserInfo().onerror = reject;
+}
  
+);
+
+const promise2 = new Promise((resolve, reject) => {
+  api.getInitialCards().onload = resolve;
+  api.getInitialCards().onerror = reject;
+}
+);
+
+Promise.all([promise1, promise2])
+.then(res => {
+  console.log(res);
+})
+
+// api.getUserInfo()
+// .then((result) => {
+//   profileName.textContent = result.name;
+//   career.textContent = result.about;
+//   userAvatar.style.backgroundImage = `url('${result.avatar}')`;
+//   userId = result._id;
+// })
+// .catch((err) => {
+//   console.log(err); 
+// }); 
+
+// api.getInitialCards()
+// .then((result) => {
+//   cards.renderItems(result);
+//   })
+// .catch((err) => {
+//   console.log(err); 
+// }); 
+ 
+console.log();
+
 const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
+        inputsText: Array.from(formList[0].querySelectorAll('.input__text')),
+        submitButton: formList[0].querySelector('.input__save'),
         inputErrors: Array.from(formList[0].querySelectorAll(`.input__text-error`)),
         errorClass: 'input__text-error_active'
   }, formList[0]);
@@ -58,6 +82,8 @@ const validProfileForm = new FormValidator ({
 
   const validAddForm = new FormValidator ({
       activeButtonClass: 'input__save_active',
+      inputsText: Array.from(formList[1].querySelectorAll('.input__text')),
+      submitButton: formList[1].querySelector('.input__save'),
       inputErrorClass: Array.from(formList[1].querySelectorAll(`.input__text-error`)),
       errorClass: 'input__text-error_active'
   }, formList[1]);
@@ -65,21 +91,33 @@ const validProfileForm = new FormValidator ({
 
   const validAvatarForm = new FormValidator ({
     activeButtonClass: 'input__save_active',
+    inputsText: Array.from(formList[2].querySelectorAll('.input__text')),
+    submitButton: formList[2].querySelector('.input__save'),
     inputErrors: Array.from(formList[2].querySelectorAll(`.input__text-error`)),
     errorClass: 'input__text-error_active'
   }, formList[2]);
   validAvatarForm.enableValidation();
 
+function createCard(elem) {
+  const card = new Card(elem, '#element', showImg, api, popupConfirmDelete, userId);
+  const cardElement = card.generateCard(userId);
+  return cardElement;
+}  
+
 const cards = new Section({   renderer:  (elem) => {
-                              const card = new Card(elem, '#element', showImg, api, confirmDelete);
-                              const cardElement = card.generateCard();
-                              cards.addItem(cardElement);
+                              // const card = new Card(elem, '#element', showImg, api, confirmDelete, userId);
+                              // const cardElement = card.generateCard(userId);
+                              // createCard(elem);
+                              cards.addItem(createCard(elem));
                               }
                              }, cardElements);
 
 
 //открытие окна редактирование профиля
 const profileData = new UserInfo(profileName, career);
+
+
+
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                       renderLoading(true, '#profile');
                                       api.setUser(elems.nameSubject, elems.careerSubject)
@@ -106,6 +144,25 @@ editButton.addEventListener('click', () => {
   popProfile.open();
 });
 
+const avatar = new PopupWithForm({ callback: (elem) => {
+                                    renderLoading(true, '#avatar');
+                                    api.setAvatar(elem.linkElement)
+                                    .then(() => {
+                                    userAvatar.style.backgroundImage = `url('${elem.linkElement}')`;
+                                    })
+                                    .then(() => {
+                                    avatar.close();
+                                    })
+                                    .catch(err => {
+                                      console.log(err);
+                                    })
+                                    .finally(() => {
+                                      renderLoading(false, '#avatar');
+                                    });
+                                  }
+},'#avatar');
+avatar.setEventListeners();
+
 //открытие окна добавления карточки
 const popupCards = new PopupWithForm({ callback: (elems) => {
                                       renderLoading(true, '#cards');
@@ -116,11 +173,12 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      likes:[],
                                                      _id: res._id,
                                                      owner: {
-                                                      _id: 'ae5c6565fcfc7aa92249dcab' }
+                                                      _id: userId }
                                       })
-                                        const card = new Card(data, '#element', showImg, api, confirmDelete);
-                                        const cardElement = card.generateCard();
-                                        cards.addItem(cardElement);
+                                        // const card = new Card(data, '#element', showImg, api, confirmDelete, userId);
+                                        // const cardElement = card.generateCard(userId);
+                                        // cards.addItem(cardElement);
+                                        cards.addItem(createCard(data));
                                       })
                                       .then(() => {
                                       popupCards.close();
@@ -163,44 +221,24 @@ userAvatar.addEventListener('click', () => {
   avatar.open();
 })
 
-
-const avatar = new PopupAvatar({ callback: (avaLink) => {
-                                renderLoading(true, '#avatar');
-                                api.setAvatar(avaLink)
-                                .then(() => {
-                                userAvatar.style.backgroundImage = `url('${avaLink}')`;
-                                })
-                                .then(() => {
-                                avatar.close();
-                                })
-                                .catch(err => {
-                                  console.log(err);
-                                })
-                                .finally(() => {
-                                  renderLoading(false, '#avatar');
-                                });
-  }
-  },'#avatar');
-avatar.setEventListeners();
-
 //подтверждение удаления карточки
-function confirmDelete(cardId, element) {
-const popupConfirmDelete = new PopupConfirmDelete({ callback: () => {
+// function confirmDelete(cardId, element) {
+const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId) => {
                                                     api.deleteCard(cardId)
                                                     .then(() => {
                                                       element.remove();
                                                     })
                                                     .then(() => {
-                                                      popupConfirmDelete.close(cardId, element);
+                                                      popupConfirmDelete.close(cardId, elem);
                                                     })
                                                     .catch( err => {
-                                                      conaole.log(err);
+                                                      console.log(err);
                                                     })
                                                   }
                                                   },'#confirmDelete');
-popupConfirmDelete.open();
-popupConfirmDelete.setEventListeners(cardId, element);
-}
+// popupConfirmDelete.open();
+popupConfirmDelete.setEventListeners();
+// }
 
 
 

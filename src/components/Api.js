@@ -8,30 +8,17 @@ getUserInfo() {
     return fetch(`${this.url}users/me`, {
     headers: this.headers,
     })  
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);   
-      })
+    .then(this._checkResponse)
     .then(data => {
           return data;
     })
-    .catch((err) => {
-        console.log(err); 
-      });
 }
 
 getInitialCards() {   
     return fetch(`${this.url}cards`, {
         headers: this.headers,
         })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);   
-    })
+    .then(this._checkResponse)
     .then(data => {
         return data;
         })
@@ -49,12 +36,7 @@ setUser(userName, info) {
     about: info
   }),
   })
-  .then(res => {
-      if (res.ok) {
-        return res.json();
-      }   
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then(this._checkResponse);
 }
 
 setCard(cardName, link) {
@@ -66,12 +48,7 @@ setCard(cardName, link) {
     link: link
   }),
   })
-  .then(res => {
-      if (res.ok) {
-        return res.json();
-      }   
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then(this._checkResponse)
 }
 
 deleteCard(cardId) {
@@ -79,12 +56,7 @@ deleteCard(cardId) {
     method: 'DELETE',
     headers: this.headers,
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);   
-      });
+    .then(this._checkResponse)
 }
 
 
@@ -93,12 +65,7 @@ putLike(cardId) {
     method: 'PUT',
     headers: this.headers,
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }  
-        return Promise.reject(`Ошибка: ${res.status}`);   
-      });
+    .then(this._checkResponse)
 }
 
 deleteLike(cardId) {
@@ -106,12 +73,7 @@ deleteLike(cardId) {
     method: 'DELETE',
     headers: this.headers,
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);     
-      });
+    .then(this._checkResponse)
 }
 
 setAvatar(link) {
@@ -122,12 +84,14 @@ setAvatar(link) {
       avatar: link
     }),
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);   
-      });
+    .then(this._checkResponse)
+}
+
+_checkResponse(res) {
+  if (res.ok) {
+      return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}`);
 }
 
 }

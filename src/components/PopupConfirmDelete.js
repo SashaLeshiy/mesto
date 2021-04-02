@@ -5,23 +5,16 @@ export default class PopupConfirmDelete extends Popup {
         super(selectorPopup);
         this._callback = callback;
 }
-_handleEscClose(evt) {
-    if(evt.key === 'Escape') {
-        this.close();
-    }
-}
 
-open() {
-    super.open();
-}
-
-close(cardId, element) {
+close() {
     super.close();
-    this._element.querySelector('.popup__confirm').removeEventListener('click', this._callback);
+    // this._element.querySelector('.popup__confirm').removeEventListener('click', this._callback);
 }
 
-setEventListeners(cardId, element) {
+setEventListeners(cardId) {
     super.setEventListeners();
-    this._element.querySelector('.popup__confirm').addEventListener('click', this._callback);
+    this._element.querySelector('.popup__confirm').addEventListener('click', () => {
+    this._callback(cardId);
+    });
 }
 }
