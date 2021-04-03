@@ -64,7 +64,7 @@ export default class Card {
            }
        })
 
-        this._setEventListener(this._elem);
+        this._setEventListener(this._idCard, this._elem);
         
         return this._element;
     }
@@ -91,10 +91,9 @@ export default class Card {
         }
     }
 
-    _setEventListener(elem) {
+    _setEventListener(cardId, elem) {
         this._trashButton.addEventListener('click', () => {
-            this._confirmDelete(this._idCard, elem);
-            // this._confirmDelete(this._idCard, element);
+            this._confirmDelete.open(cardId, elem);
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._idCard);

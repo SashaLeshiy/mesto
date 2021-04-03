@@ -9,8 +9,10 @@ import './index.css';
 import {
         cardElements, 
         editButton, 
-        addButton, 
-        formList, 
+        addButton,
+        profileForm, 
+        addForm,
+        addAva,
         profileName, 
         career, 
         userAvatar,
@@ -32,30 +34,31 @@ export const api = new Api(config);
 
 let userId;
 
-const promise1 = new Promise((resolve, reject) => {
-  api.getUserInfo().onload = resolve;
-  api.getUserInfo().onerror = reject;
-}
- 
-);
+const profileData = new UserInfo(profileName, career, userAvatar);
 
-const promise2 = new Promise((resolve, reject) => {
-  api.getInitialCards().onload = resolve;
-  api.getInitialCards().onerror = reject;
-}
-);
-
-Promise.all([promise1, promise2])
-.then(res => {
-  console.log(res);
+Promise.all([api.getUserInfo(),api.getInitialCards()])
+.then((res) => {
+  profileData.setUserInfo(res[0].name, res[0].about);
+  profileData.setAvatar(res[0].avatar);
+  userId = res[0]._id;
+  cards.renderItems(res[1]);
 })
+.catch((err) => {
+    console.log(err); 
+});
+
+
 
 // api.getUserInfo()
 // .then((result) => {
-//   profileName.textContent = result.name;
-//   career.textContent = result.about;
-//   userAvatar.style.backgroundImage = `url('${result.avatar}')`;
-//   userId = result._id;
+//   profileData.setUserInfo(result.name, result.about);
+//   profileData.setAvatar(result.avatar);
+//   profileData.setId(result._id);
+//   // const profileData = new UserInfo(result.name, result.about, result.avatar, result._id);
+//   // profileName.textContent = result.name;
+//   // career.textContent = result.about;
+//   // userAvatar.style.backgroundImage = `url('${result.avatar}')`;
+//   // userId = result._id;
 // })
 // .catch((err) => {
 //   console.log(err); 
@@ -68,54 +71,54 @@ Promise.all([promise1, promise2])
 // .catch((err) => {
 //   console.log(err); 
 // }); 
- 
-console.log();
+
 
 const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
-        inputsText: Array.from(formList[0].querySelectorAll('.input__text')),
-        submitButton: formList[0].querySelector('.input__save'),
-        inputErrors: Array.from(formList[0].querySelectorAll(`.input__text-error`)),
+        inputsText: Array.from(profileForm.querySelectorAll('.input__text')),
+        submitButton: profileForm.querySelector('.input__save'),
+        inputErrors: Array.from(profileForm.querySelectorAll(`.input__text-error`)),
         errorClass: 'input__text-error_active'
-  }, formList[0]);
+  }, profileForm);
   validProfileForm.enableValidation();
 
   const validAddForm = new FormValidator ({
       activeButtonClass: 'input__save_active',
-      inputsText: Array.from(formList[1].querySelectorAll('.input__text')),
-      submitButton: formList[1].querySelector('.input__save'),
-      inputErrorClass: Array.from(formList[1].querySelectorAll(`.input__text-error`)),
+      inputsText: Array.from(addForm.querySelectorAll('.input__text')),
+      submitButton: addForm.querySelector('.input__save'),
+      inputErrorClass: Array.from(addForm.querySelectorAll(`.input__text-error`)),
       errorClass: 'input__text-error_active'
-  }, formList[1]);
+  }, addForm);
   validAddForm.enableValidation();
 
   const validAvatarForm = new FormValidator ({
     activeButtonClass: 'input__save_active',
-    inputsText: Array.from(formList[2].querySelectorAll('.input__text')),
-    submitButton: formList[2].querySelector('.input__save'),
-    inputErrors: Array.from(formList[2].querySelectorAll(`.input__text-error`)),
+    inputsText: Array.from(addAva.querySelectorAll('.input__text')),
+    submitButton: addAva.querySelector('.input__save'),
+    inputErrors: Array.from(addAva.querySelectorAll(`.input__text-error`)),
     errorClass: 'input__text-error_active'
-  }, formList[2]);
+  }, addAva);
   validAvatarForm.enableValidation();
 
-function createCard(elem) {
+
+  
+function createCard(elem, userId) {
   const card = new Card(elem, '#element', showImg, api, popupConfirmDelete, userId);
   const cardElement = card.generateCard(userId);
   return cardElement;
 }  
 
+
 const cards = new Section({   renderer:  (elem) => {
                               // const card = new Card(elem, '#element', showImg, api, confirmDelete, userId);
                               // const cardElement = card.generateCard(userId);
                               // createCard(elem);
-                              cards.addItem(createCard(elem));
+                              cards.addItem(createCard(elem, userId));
                               }
                              }, cardElements);
 
 
 //открытие окна редактирование профиля
-const profileData = new UserInfo(profileName, career);
-
 
 
 const popProfile = new PopupWithForm({ callback: (elems) => {
@@ -148,7 +151,7 @@ const avatar = new PopupWithForm({ callback: (elem) => {
                                     renderLoading(true, '#avatar');
                                     api.setAvatar(elem.linkElement)
                                     .then(() => {
-                                    userAvatar.style.backgroundImage = `url('${elem.linkElement}')`;
+                                    profileData.setAvatar(elem.linkElement);
                                     })
                                     .then(() => {
                                     avatar.close();
@@ -223,10 +226,10 @@ userAvatar.addEventListener('click', () => {
 
 //подтверждение удаления карточки
 // function confirmDelete(cardId, element) {
-const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId) => {
+const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId, elem) => {
                                                     api.deleteCard(cardId)
                                                     .then(() => {
-                                                      element.remove();
+                                                      elem.remove();
                                                     })
                                                     .then(() => {
                                                       popupConfirmDelete.close(cardId, elem);
@@ -236,7 +239,6 @@ const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId) => {
                                                     })
                                                   }
                                                   },'#confirmDelete');
-// popupConfirmDelete.open();
 popupConfirmDelete.setEventListeners();
 // }
 

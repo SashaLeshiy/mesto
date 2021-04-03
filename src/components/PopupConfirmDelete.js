@@ -11,10 +11,10 @@ close() {
     // this._element.querySelector('.popup__confirm').removeEventListener('click', this._callback);
 }
 
-setEventListeners(cardId) {
+setEventListeners() {
     super.setEventListeners();
     this._element.querySelector('.popup__confirm').addEventListener('click', () => {
-    this._callback(cardId);
+    this._callback(cardId, elem);
     });
 }
 }

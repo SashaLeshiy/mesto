@@ -14,5 +14,8 @@
   export const linkPlace = document.querySelector('.input__text_text_link') //селектор ссылка на фотографию
   export const bigImage = document.querySelector('.popup__image');// окно с картинкой
   export const imageName = document.querySelector('.popup__imageName'); // подпись к картинке
-  export const formList = Array.from(document.querySelectorAll('form'));
+  // export const formList = Array.from(document.querySelectorAll('form'));
   export const textButton = document.querySelector('.input__save').textContent;
+  export const profileForm = document.querySelector('#profileForm');
+  export const addForm = document.querySelector('#addForm');
+  export const addAva = document.querySelector('#addAva');
