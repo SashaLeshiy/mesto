@@ -239,7 +239,7 @@ const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId, elem) => 
                                                     })
                                                   }
                                                   },'#confirmDelete');
-popupConfirmDelete.setEventListeners();
+// popupConfirmDelete.setEventListeners();
 // }
 
 
