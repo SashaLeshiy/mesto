@@ -1,29 +1,30 @@
+import { profileName, career, userAvatar } from '../utils/constants.js';
+
 export default class UserInfo {
-    constructor(nameElem, infoElem, avatar) {
-        this._name = nameElem;
-        this._info = infoElem;
+    constructor(name, about, avatar) {
+        this._name = name;
+        this._info = about;
         this._avatar = avatar;
     }
 
-    setId(id) {
-        this._userId = id;
+    setUserInfo(name, about) {
+        this._name = name;
+        this._info = about;
+        profileName.textContent = this._name;
+        career.textContent = this._info;
+    }
+    setAvatar(link) {
+        this._avatar = `url('${link}')`;
+        userAvatar.style.backgroundImage = this._avatar;
     }
 
     getUserInfo() {
         return {
-            name: this._name.textContent,
-            info: this._info.textContent,
-            avatar: this._avatar.style.backgroundImage,
+            name: this._name,
+            info: this._info,
+            avatar: this._avatar,
             id: this._userId
          }
-    }
-
-    setUserInfo(name, about) {
-        this._name.textContent = name;
-        this._info.textContent = about;
-    }
-    setAvatar(link) {
-        this._avatar.style.backgroundImage = `url('${link}')`;
     }
     
 }

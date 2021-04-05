@@ -3,24 +3,19 @@ import Popup from '../components/Popup.js';
 export default class PopupConfirmDelete extends Popup {
     constructor ({ callback }, selectorPopup) {
         super(selectorPopup);
-        console.log(selectorPopup);
         this._callback = callback;
 }
 
 open(cardId, elem) {
     super.open();
-    this.setEventListeners(cardId, elem);
+    this._cardId = cardId;
+    this._elem = elem;
 }
 
-close() {
-    super.close();
-    // this._element.querySelector('.popup__confirm').removeEventListener('click', this._callback);
-}
-
-setEventListeners(cardId, elem) {
+setEventListeners() {
     super.setEventListeners();
     this._element.querySelector('.popup__confirm').addEventListener('click', () => {
-    this._callback(cardId, elem);
+    this._callback(this._cardId, this._elem);
     });
 }
 }

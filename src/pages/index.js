@@ -21,7 +21,6 @@ import {
         textButton
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
-import PopupAvatar from '../components/PopupAvatar.js';
 
 const config = {
   url: 'https://mesto.nomoreparties.co/v1/cohort-21/',
@@ -46,8 +45,6 @@ Promise.all([api.getUserInfo(),api.getInitialCards()])
 .catch((err) => {
     console.log(err); 
 });
-
-
 
 // api.getUserInfo()
 // .then((result) => {
@@ -102,18 +99,15 @@ const validProfileForm = new FormValidator ({
 
 
   
-function createCard(elem, userId) {
-  const card = new Card(elem, '#element', showImg, api, popupConfirmDelete, userId);
+function createCard(data) {
+  const card = new Card(data, '#element', showImg, api, popupConfirmDelete, userId);
   const cardElement = card.generateCard(userId);
   return cardElement;
 }  
 
 
 const cards = new Section({   renderer:  (elem) => {
-                              // const card = new Card(elem, '#element', showImg, api, confirmDelete, userId);
-                              // const cardElement = card.generateCard(userId);
-                              // createCard(elem);
-                              cards.addItem(createCard(elem, userId));
+                              cards.addItem(createCard(elem));
                               }
                              }, cardElements);
 
@@ -178,9 +172,6 @@ const popupCards = new PopupWithForm({ callback: (elems) => {
                                                      owner: {
                                                       _id: userId }
                                       })
-                                        // const card = new Card(data, '#element', showImg, api, confirmDelete, userId);
-                                        // const cardElement = card.generateCard(userId);
-                                        // cards.addItem(cardElement);
                                         cards.addItem(createCard(data));
                                       })
                                       .then(() => {
@@ -224,23 +215,20 @@ userAvatar.addEventListener('click', () => {
   avatar.open();
 })
 
-//подтверждение удаления карточки
-// function confirmDelete(cardId, element) {
 const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId, elem) => {
                                                     api.deleteCard(cardId)
                                                     .then(() => {
-                                                      elem.remove();
+                                                    elem.remove();
                                                     })
                                                     .then(() => {
-                                                      popupConfirmDelete.close(cardId, elem);
+                                                     popupConfirmDelete.close(); 
                                                     })
                                                     .catch( err => {
                                                       console.log(err);
                                                     })
                                                   }
                                                   },'#confirmDelete');
-// popupConfirmDelete.setEventListeners();
-// }
+popupConfirmDelete.setEventListeners();
 
 
 
