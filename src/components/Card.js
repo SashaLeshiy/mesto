@@ -91,35 +91,9 @@ export default class Card {
         }
     }
 
-    // _deleteCard(cardId, elem){
-    //     this._confirmDelete.open();
-    //     api.deleteCard(cardId)
-    //     .then(() => {
-    //         elem.remove();
-    //     })
-    //     .then(() => {
-    //         this._confirmDelete.close;
-    //     })
-    //     .catch( err => {
-    //         console.log(err);
-    //     })
-    // }
-
     _setEventListener(cardId, elem) {
         this._trashButton.addEventListener('click', () => {
             this._confirmDelete.open(cardId, elem);
-            // this._confirmDelete._callback(cardId, elem);
-            // // this._confirmDelete.open(cardId, elem);
-            //                                         api.deleteCard(cardId)
-            //                                         .then(() => {
-            //                                           elem.remove();
-            //                                         })
-            //                                         .then(() => {
-            //                                           popupConfirmDelete.close(cardId, elem);
-            //                                         })
-            //                                         .catch( err => {
-            //                                           console.log(err);
-            //                                         })
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._idCard);

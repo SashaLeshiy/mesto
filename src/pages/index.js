@@ -46,53 +46,30 @@ Promise.all([api.getUserInfo(),api.getInitialCards()])
     console.log(err); 
 });
 
-// api.getUserInfo()
-// .then((result) => {
-//   profileData.setUserInfo(result.name, result.about);
-//   profileData.setAvatar(result.avatar);
-//   profileData.setId(result._id);
-//   // const profileData = new UserInfo(result.name, result.about, result.avatar, result._id);
-//   // profileName.textContent = result.name;
-//   // career.textContent = result.about;
-//   // userAvatar.style.backgroundImage = `url('${result.avatar}')`;
-//   // userId = result._id;
-// })
-// .catch((err) => {
-//   console.log(err); 
-// }); 
-
-// api.getInitialCards()
-// .then((result) => {
-//   cards.renderItems(result);
-//   })
-// .catch((err) => {
-//   console.log(err); 
-// }); 
-
-
 const validProfileForm = new FormValidator ({
         activeButtonClass: 'input__save_active',
-        inputsText: Array.from(profileForm.querySelectorAll('.input__text')),
-        submitButton: profileForm.querySelector('.input__save'),
-        inputErrors: Array.from(profileForm.querySelectorAll(`.input__text-error`)),
+        inputsText: 'input__text',
+        submitButton: 'input__save',
+        inputErrors: 'input__text-error',
         errorClass: 'input__text-error_active'
   }, profileForm);
   validProfileForm.enableValidation();
+  
 
-  const validAddForm = new FormValidator ({
+const validAddForm = new FormValidator ({
       activeButtonClass: 'input__save_active',
-      inputsText: Array.from(addForm.querySelectorAll('.input__text')),
-      submitButton: addForm.querySelector('.input__save'),
-      inputErrorClass: Array.from(addForm.querySelectorAll(`.input__text-error`)),
+      inputsText: 'input__text',
+      submitButton: 'input__save',
+      inputErrorClass: 'input__text-error',
       errorClass: 'input__text-error_active'
   }, addForm);
   validAddForm.enableValidation();
 
-  const validAvatarForm = new FormValidator ({
+const validAvatarForm = new FormValidator ({ 
     activeButtonClass: 'input__save_active',
-    inputsText: Array.from(addAva.querySelectorAll('.input__text')),
-    submitButton: addAva.querySelector('.input__save'),
-    inputErrors: Array.from(addAva.querySelectorAll(`.input__text-error`)),
+    inputsText: 'input__text',
+    submitButton: 'input__save',
+    inputErrors: 'input__text-error',
     errorClass: 'input__text-error_active'
   }, addAva);
   validAvatarForm.enableValidation();
@@ -105,16 +82,12 @@ function createCard(data) {
   return cardElement;
 }  
 
-
 const cards = new Section({   renderer:  (elem) => {
                               cards.addItem(createCard(elem));
                               }
                              }, cardElements);
 
-
 //открытие окна редактирование профиля
-
-
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                       renderLoading(true, '#profile');
                                       api.setUser(elems.nameSubject, elems.careerSubject)
@@ -215,6 +188,7 @@ userAvatar.addEventListener('click', () => {
   avatar.open();
 })
 
+// попап подтверждения удаления карточки
 const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId, elem) => {
                                                     api.deleteCard(cardId)
                                                     .then(() => {
