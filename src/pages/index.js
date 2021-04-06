@@ -17,8 +17,11 @@ import {
         career, 
         userAvatar,
         nameInput, 
+        bigImage, 
+        imageName,
         careerInput, 
-        textButton
+        textButton,
+        objValid
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 
@@ -33,45 +36,27 @@ export const api = new Api(config);
 
 let userId;
 
-const profileData = new UserInfo(profileName, career, userAvatar);
+const profileData = new UserInfo('profile__heading', 'profile__subheading', 'profile__image');
 
 Promise.all([api.getUserInfo(),api.getInitialCards()])
-.then((res) => {
-  profileData.setUserInfo(res[0].name, res[0].about);
-  profileData.setAvatar(res[0].avatar);
-  userId = res[0]._id;
-  cards.renderItems(res[1]);
+.then(([userData, initialCards]) => {
+  profileData.setUserInfo(userData.name, userData.about);
+  profileData.setAvatar(userData.avatar);
+  userId = userData._id;
+  cards.renderItems(initialCards);
 })
 .catch((err) => {
     console.log(err); 
 });
 
-const validProfileForm = new FormValidator ({
-        activeButtonClass: 'input__save_active',
-        inputsText: 'input__text',
-        submitButton: 'input__save',
-        inputErrors: 'input__text-error',
-        errorClass: 'input__text-error_active'
-  }, profileForm);
+const validProfileForm = new FormValidator (objValid, profileForm);
   validProfileForm.enableValidation();
   
 
-const validAddForm = new FormValidator ({
-      activeButtonClass: 'input__save_active',
-      inputsText: 'input__text',
-      submitButton: 'input__save',
-      inputErrorClass: 'input__text-error',
-      errorClass: 'input__text-error_active'
-  }, addForm);
+const validAddForm = new FormValidator (objValid, addForm);
   validAddForm.enableValidation();
 
-const validAvatarForm = new FormValidator ({ 
-    activeButtonClass: 'input__save_active',
-    inputsText: 'input__text',
-    submitButton: 'input__save',
-    inputErrors: 'input__text-error',
-    errorClass: 'input__text-error_active'
-  }, addAva);
+const validAvatarForm = new FormValidator (objValid, addAva);
   validAvatarForm.enableValidation();
 
 
@@ -91,8 +76,8 @@ const cards = new Section({   renderer:  (elem) => {
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                       renderLoading(true, '#profile');
                                       api.setUser(elems.nameSubject, elems.careerSubject)
-                                      .then (() => {
-                                        profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
+                                      .then ((res) => {
+                                       profileData.setUserInfo(res.name, res.about);
                                       })
                                       .then (() => {
                                         popProfile.close();
@@ -175,7 +160,7 @@ addButton.addEventListener('click', () => {
 })
 
 // открытие попапа с картинкой
-const popupImage = new PopupWithImage('#bigImage');
+const popupImage = new PopupWithImage(bigImage, imageName, '#bigImage');
 popupImage.setEventListeners();
 
 function showImg(name, link){

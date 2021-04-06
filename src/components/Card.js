@@ -1,6 +1,3 @@
-import { api } from "../pages/index.js";
-
-
 export default class Card {
     constructor(data, cardSelector, func, api, popupConfirmDelete, userId){
         this._name = data.name;
@@ -71,7 +68,7 @@ export default class Card {
 
     _likeElem(cardId){
         if(!this._likeButton.classList.contains('element__like_black')) {
-            api.putLike(cardId)
+            this._api.putLike(cardId)
             .then(res => {
                 this._likeButton.classList.add('element__like_black');
                 this._likeCount.textContent = res.likes.length;
@@ -80,7 +77,7 @@ export default class Card {
                 console.log(err);
             })
         } else {
-            api.deleteLike(cardId)
+            this._api.deleteLike(cardId)
             .then(res => {
                 this._likeButton.classList.remove('element__like_black');
                 this._likeCount.textContent = res.likes.length;
