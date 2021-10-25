@@ -1,8 +1,8 @@
 export default class FormValidator {
       constructor(formData, form) {
-          this._inputs = formData.inputsText;
-          this._submitButton = formData.submitButton;
-          this._errorSpan = formData.inputErrors;
+          this._inputs = Array.from(form.querySelectorAll(`.${formData.inputsText}`));
+          this._submitButton = form.querySelector(`.${formData.submitButton}`);
+          this._errorSpan = Array.from(form.querySelectorAll(`.${formData.inputErrors}`));
           this._activeButtonClass = formData.activeButtonClass;
           this._errorClass = formData.errorClass;
           this._form = form;

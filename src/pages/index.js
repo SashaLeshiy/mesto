@@ -17,8 +17,11 @@ import {
         career, 
         userAvatar,
         nameInput, 
+        bigImage, 
+        imageName,
         careerInput, 
-        textButton
+        textButton,
+        objValid
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 
@@ -33,68 +36,27 @@ export const api = new Api(config);
 
 let userId;
 
-const profileData = new UserInfo(profileName, career, userAvatar);
+const profileData = new UserInfo('profile__heading', 'profile__subheading', 'profile__image');
 
 Promise.all([api.getUserInfo(),api.getInitialCards()])
-.then((res) => {
-  profileData.setUserInfo(res[0].name, res[0].about);
-  profileData.setAvatar(res[0].avatar);
-  userId = res[0]._id;
-  cards.renderItems(res[1]);
+.then(([userData, initialCards]) => {
+  profileData.setUserInfo(userData.name, userData.about);
+  profileData.setAvatar(userData.avatar);
+  userId = userData._id;
+  cards.renderItems(initialCards);
 })
 .catch((err) => {
     console.log(err); 
 });
 
-// api.getUserInfo()
-// .then((result) => {
-//   profileData.setUserInfo(result.name, result.about);
-//   profileData.setAvatar(result.avatar);
-//   profileData.setId(result._id);
-//   // const profileData = new UserInfo(result.name, result.about, result.avatar, result._id);
-//   // profileName.textContent = result.name;
-//   // career.textContent = result.about;
-//   // userAvatar.style.backgroundImage = `url('${result.avatar}')`;
-//   // userId = result._id;
-// })
-// .catch((err) => {
-//   console.log(err); 
-// }); 
-
-// api.getInitialCards()
-// .then((result) => {
-//   cards.renderItems(result);
-//   })
-// .catch((err) => {
-//   console.log(err); 
-// }); 
-
-
-const validProfileForm = new FormValidator ({
-        activeButtonClass: 'input__save_active',
-        inputsText: Array.from(profileForm.querySelectorAll('.input__text')),
-        submitButton: profileForm.querySelector('.input__save'),
-        inputErrors: Array.from(profileForm.querySelectorAll(`.input__text-error`)),
-        errorClass: 'input__text-error_active'
-  }, profileForm);
+const validProfileForm = new FormValidator (objValid, profileForm);
   validProfileForm.enableValidation();
+  
 
-  const validAddForm = new FormValidator ({
-      activeButtonClass: 'input__save_active',
-      inputsText: Array.from(addForm.querySelectorAll('.input__text')),
-      submitButton: addForm.querySelector('.input__save'),
-      inputErrorClass: Array.from(addForm.querySelectorAll(`.input__text-error`)),
-      errorClass: 'input__text-error_active'
-  }, addForm);
+const validAddForm = new FormValidator (objValid, addForm);
   validAddForm.enableValidation();
 
-  const validAvatarForm = new FormValidator ({
-    activeButtonClass: 'input__save_active',
-    inputsText: Array.from(addAva.querySelectorAll('.input__text')),
-    submitButton: addAva.querySelector('.input__save'),
-    inputErrors: Array.from(addAva.querySelectorAll(`.input__text-error`)),
-    errorClass: 'input__text-error_active'
-  }, addAva);
+const validAvatarForm = new FormValidator (objValid, addAva);
   validAvatarForm.enableValidation();
 
 
@@ -105,21 +67,17 @@ function createCard(data) {
   return cardElement;
 }  
 
-
 const cards = new Section({   renderer:  (elem) => {
                               cards.addItem(createCard(elem));
                               }
                              }, cardElements);
 
-
 //открытие окна редактирование профиля
-
-
 const popProfile = new PopupWithForm({ callback: (elems) => {
                                       renderLoading(true, '#profile');
                                       api.setUser(elems.nameSubject, elems.careerSubject)
-                                      .then (() => {
-                                        profileData.setUserInfo(elems.nameSubject, elems.careerSubject);
+                                      .then ((res) => {
+                                       profileData.setUserInfo(res.name, res.about);
                                       })
                                       .then (() => {
                                         popProfile.close();
@@ -202,7 +160,7 @@ addButton.addEventListener('click', () => {
 })
 
 // открытие попапа с картинкой
-const popupImage = new PopupWithImage('#bigImage');
+const popupImage = new PopupWithImage(bigImage, imageName, '#bigImage');
 popupImage.setEventListeners();
 
 function showImg(name, link){
@@ -215,6 +173,7 @@ userAvatar.addEventListener('click', () => {
   avatar.open();
 })
 
+// попап подтверждения удаления карточки
 const popupConfirmDelete = new PopupConfirmDelete({ callback: (cardId, elem) => {
                                                     api.deleteCard(cardId)
                                                     .then(() => {

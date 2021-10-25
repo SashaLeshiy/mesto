@@ -19,3 +19,10 @@
   export const profileForm = document.querySelector('#profileForm');
   export const addForm = document.querySelector('#addForm');
   export const addAva = document.querySelector('#addAva');
+  export const objValid = {
+    activeButtonClass: 'input__save_active',
+    inputsText: 'input__text',
+    submitButton: 'input__save',
+    inputErrors: 'input__text-error',
+    errorClass: 'input__text-error_active'
+};

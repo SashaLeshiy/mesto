@@ -18,7 +18,7 @@
   margin-bottom: 48px;
 }
 
-.input__text:invalid {
+input:invalid:not(:placeholder-shown) {
   border-bottom: 1px solid rgb(255,0,0);
 }
 

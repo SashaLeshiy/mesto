@@ -1,6 +1,3 @@
-import { api } from "../pages/index.js";
-
-
 export default class Card {
     constructor(data, cardSelector, func, api, popupConfirmDelete, userId){
         this._name = data.name;
@@ -71,7 +68,7 @@ export default class Card {
 
     _likeElem(cardId){
         if(!this._likeButton.classList.contains('element__like_black')) {
-            api.putLike(cardId)
+            this._api.putLike(cardId)
             .then(res => {
                 this._likeButton.classList.add('element__like_black');
                 this._likeCount.textContent = res.likes.length;
@@ -80,7 +77,7 @@ export default class Card {
                 console.log(err);
             })
         } else {
-            api.deleteLike(cardId)
+            this._api.deleteLike(cardId)
             .then(res => {
                 this._likeButton.classList.remove('element__like_black');
                 this._likeCount.textContent = res.likes.length;
@@ -91,35 +88,9 @@ export default class Card {
         }
     }
 
-    // _deleteCard(cardId, elem){
-    //     this._confirmDelete.open();
-    //     api.deleteCard(cardId)
-    //     .then(() => {
-    //         elem.remove();
-    //     })
-    //     .then(() => {
-    //         this._confirmDelete.close;
-    //     })
-    //     .catch( err => {
-    //         console.log(err);
-    //     })
-    // }
-
     _setEventListener(cardId, elem) {
         this._trashButton.addEventListener('click', () => {
             this._confirmDelete.open(cardId, elem);
-            // this._confirmDelete._callback(cardId, elem);
-            // // this._confirmDelete.open(cardId, elem);
-            //                                         api.deleteCard(cardId)
-            //                                         .then(() => {
-            //                                           elem.remove();
-            //                                         })
-            //                                         .then(() => {
-            //                                           popupConfirmDelete.close(cardId, elem);
-            //                                         })
-            //                                         .catch( err => {
-            //                                           console.log(err);
-            //                                         })
         });
         this._likeButton.addEventListener('click', () => {
             this._likeElem(this._idCard);
